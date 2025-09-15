@@ -1,0 +1,64 @@
+{
+  "name": "fnclip",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.6.2",
+  "description": "_description_",
+  "author": "s3xysteak",
+  "license": "MIT",
+  "homepage": "https://github.com/s3xysteak/fnclip",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s3xysteak/fnclip.git"
+  },
+  "bugs": "https://github.com/s3xysteak/fnclip/issues",
+  "keywords": [
+    "function",
+    "utils"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "fnclip": "./dist/run.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "tsdown",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "release": "pnpm typecheck && bumpp && pnpm publish",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ansis": "^4.1.0",
+    "cac": "^6.7.14",
+    "consola": "^3.4.2",
+    "empathic": "^2.0.0",
+    "fs-extra": "^11.3.1",
+    "local-pkg": "^1.1.2",
+    "pathe": "^2.0.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.3.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.4.0",
+    "bumpp": "^10.2.3",
+    "eslint": "^9.35.0",
+    "pkg-types": "^2.3.0",
+    "publint": "^0.3.12",
+    "tinyglobby": "^0.2.15",
+    "tsdown": "^0.15.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
