@@ -4,7 +4,7 @@ import { consola } from 'consola'
 import { version } from '../package.json'
 import { add, clear } from './index'
 
-const cli = cac('tsdown')
+const cli = cac('fnclip')
 cli.help().version(version)
 
 cli
