@@ -19,6 +19,13 @@ Sometimes I just want maybe one tool function, by I had to install a whole libra
 
 ## 🚀 example (quick start!)
 
+To check all details, please use `--help`!
+
+```sh
+pnpx fnclip -h
+pnpx fnclip add -h
+```
+
 ### basic
 
 Add a function to `src/utils/fnclip/pipe.ts`.
@@ -56,9 +63,17 @@ pnpx fnclip add pipe --ts
 pnpx fnclip add pipe --no-ts
 ```
 
+### add a lot of functions at once
+
+Mostly use it while starting a new project.
+
+```sh
+pnpx fnclip add objectKeys objectMap nonNullable
+```
+
 ### Pre configuration (✨Recommend!)
 
-Just use it in `package.json/scripts`.
+Just prepare for it in `package.json/scripts`.
 
 ```json
 {
