@@ -56,6 +56,25 @@ pnpx fnclip add pipe --ts
 pnpx fnclip add pipe --no-ts
 ```
 
+### Pre configuration (✨Recommend!)
+
+Just use it in `package.json/scripts`.
+
+```json
+{
+  "scripts": {
+    "fnclip:add": "pnpx fnclip@v0.0.2 add --no-index --ts --dir src/utils/my-fn",
+    "fnclip:clear": "pnpx fnclip@v0.0.2 clear --dir src/utils/my-fn"
+  }
+}
+```
+
+To use it:
+
+```sh
+pnpm fnclip:add pipe # add pipe function
+```
+
 ## License
 
 [MIT](/LICENSE) License © 2025-PRESENT [s3xysteak](https://github.com/s3xysteak/)

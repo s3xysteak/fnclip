@@ -8,7 +8,10 @@ const cli = cac('fnclip')
 cli.help().version(version)
 
 cli
-  .command('add [...funcs]', 'Add functions to the project', { ignoreOptionDefaultValue: true })
+  .command('add [...funcs]', 'Add functions to the project', {
+    ignoreOptionDefaultValue: true,
+    allowUnknownOptions: true,
+  })
   .option('-d, --dir <path>', 'The target folder')
   .option('--cwd <path>', 'The base path')
   .option('--ts', 'Enable TypeScript mode')
@@ -21,7 +24,10 @@ cli
   })
 
 cli
-  .command('clear', 'Clear the project', { ignoreOptionDefaultValue: true })
+  .command('clear', 'Clear the project', {
+    ignoreOptionDefaultValue: true,
+    allowUnknownOptions: true,
+  })
   .option('-d, --dir <path>', 'The target folder')
   .option('--cwd <path>', 'The base path')
   .action(async (options) => {
