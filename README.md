@@ -6,16 +6,16 @@ Use functions only what you want.
 
 > 🔨 Still WIP bro plz do not use it.
 
-## ✨ Features
-
-Just like so many other tool libraries, but **you can use functions only what you want** by cli.
+Just like so many other tool libraries. But **you can use functions only what you want** by clipboard/cli.
 
 Sometimes I just want maybe one tool function, by I had to install a whole library. When I tried to just copy what I want, I found a lots of complex dependencies... Which is so annoying. Thus this library was born.
 
+## ✨ Features
+
 1. Each single file under `src/functions/` represents an independent function without any dependencies, you can copy and use it directly!
 2. And also there is a cli for your convenience, check below.
-3. Both support js/ts. It will automatically find out what you are using but you can still indicate it manually. For js, it will provide `d.ts`.
-4. Only support nodejs currently. But you can still just copy the file you want!
+3. Both support js/ts. It will automatically find out what you are using, but you can still indicate it manually. For js, it will provide `d.ts`.
+4. The cli only support nodejs currently. But you can still just copy the file you want!
 
 ## 🚀 example (quick start!)
 
@@ -40,7 +40,7 @@ pnpx fnclip add pipe
 
 Add a function to `packages/other/fnclip/pipe.ts`.
 
-...
+Add or update index like above.
 
 ```sh
 pnpx fnclip add pipe --cwd packages/other --dir fnclip
@@ -48,7 +48,7 @@ pnpx fnclip add pipe --cwd packages/other --dir fnclip
 
 ### if you do not want `index`
 
-Do not add/update index file.
+This will prevent adding/updating index file.
 
 ```sh
 pnpx fnclip add pipe --no-index
