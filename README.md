@@ -6,9 +6,9 @@ Use functions only what you want.
 
 > 🔨 Still WIP bro plz do not use it.
 
-Just like so many other tool libraries. But **you can use functions only what you want** by clipboard/cli.
+Just like many other tool libraries, but **you can use only the functions you need** through the clipboard or CLI.
 
-Sometimes I just want maybe one tool function, by I had to install a whole library. When I tried to just copy what I want, I found a lots of complex dependencies... Which is so annoying. Thus this library was born.
+Sometimes I just want maybe one tool function, but I had to install a whole library. When I tried to just copy what I want, I found a lots of complex dependencies... Which is so annoying. Thus this library was born.
 
 ## ✨ Features
 
