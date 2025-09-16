@@ -2,7 +2,7 @@
 /* prettier-ignore */
 // @ts-nocheck
 
-//#region src/functions/pipe.ts
+//#region src/functions/function/pipe/index.ts
 /**
 * pipe() can be called on one or more functions, each of which can take one argument ("UnaryFunction")
 * and uses it to return a value.

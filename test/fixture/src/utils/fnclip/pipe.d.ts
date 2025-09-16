@@ -2,7 +2,7 @@
 /* prettier-ignore */
 // @ts-nocheck
 
-//#region src/functions/pipe.d.ts
+//#region src/functions/function/pipe/index.d.ts
 interface UnaryFunction<T, R> {
   (source: T): R;
 }

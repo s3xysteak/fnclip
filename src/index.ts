@@ -10,30 +10,31 @@ import { name } from '../package.json'
 export interface Options {
   dir: string
   cwd: string
-  isTypescript: boolean
-  indexFile: boolean
+  ts: boolean
+  index: boolean
 }
 
 export async function add(funcs: string[], options: Partial<Options> = {}) {
   const {
     dir,
     cwd,
-    isTypescript,
-    indexFile,
+    ts,
+    index,
   } = await handleOptions(options)
 
   const dirPath = join(cwd, dir)
   const fnclipPath = dirname(resolveModule(name)!)
 
   await fs.ensureDir(dirPath)
+  const meta: Record<string, string> = await fs.readJSON(join(fnclipPath, 'funcs-meta.json'))
 
   // handle function files
   for (const func of funcs) {
-    const exts = isTypescript ? ['.ts'] : ['.js', '.d.ts']
+    const exts = ts ? ['.ts'] : ['.js', '.d.ts']
 
     for (const ext of exts) {
       await fs.copy(
-        join(fnclipPath, `./functions/${func}${ext}`),
+        join(fnclipPath, `${meta[func]}${ext}`),
         join(dirPath, `${func}${ext}`),
       )
 
@@ -45,13 +46,25 @@ export async function add(funcs: string[], options: Partial<Options> = {}) {
   consola.success(`Successfully add ${funcs.map(cyan).join(', ')}.`)
 
   // handle index
-  if (!indexFile)
+  if (!index)
     return
-  const indexPath = join(dirPath, `index${isTypescript ? '.ts' : '.js'}`)
+  const indexPathNoExt = join(dirPath, 'index')
+
+  // check exist index file
+  let indexPath: string
+  for (const ext of ['.ts', '.js']) {
+    if (await fs.exists(indexPathNoExt + ext)) {
+      indexPath = indexPathNoExt + ext
+      break
+    }
+  }
+
+  indexPath ??= indexPathNoExt + (ts ? '.ts' : '.js')
+
   await fs.ensureFile(indexPath)
   const indexContent = await fs.readFile(indexPath, 'utf-8')
 
-  const exportContent = (f: string) => `export * from './${f}';`
+  const exportContent = (f: string) => `export * from './${f}';\n`
   await fs.writeFile(
     indexPath,
     addIgnoreToContent(indexContent + funcs.map((f) => {
@@ -81,21 +94,21 @@ function addIgnoreToContent(content: string) {
 async function handleOptions(options: Partial<Options>): Promise<Options> {
   const cwd = options.cwd || '.'
 
-  let isTypescript = false
+  let ts = false
   const packageJsonPath = findPackage({ cwd })
   if (packageJsonPath) {
     const contents = await fs.readFile(packageJsonPath, 'utf8')
     const obj: PackageJson = JSON.parse(contents)
     if (obj?.dependencies?.typescript || obj?.devDependencies?.typescript) {
-      isTypescript = true
+      ts = true
     }
   }
 
   const defaultOptions: Options = {
     dir: 'src/utils/fnclip',
     cwd,
-    isTypescript,
-    indexFile: true,
+    ts,
+    index: true,
   }
   return Object.assign(defaultOptions, options)
 }
