@@ -1,11 +1,10 @@
 import type { PackageJson } from 'pkg-types'
+import { fileURLToPath } from 'node:url'
 import { cyan } from 'ansis'
 import consola from 'consola'
 import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
-import { resolveModule } from 'local-pkg'
 import { dirname, join } from 'pathe'
-import { name } from '../package.json'
 
 export interface Options {
   dir: string
@@ -76,7 +75,7 @@ function createCtx(funcs: string[], options: Options) {
 
   return {
     handleFunctions: async () => {
-      const fnclipPath = dirname(resolveModule(name)!)
+      const fnclipPath = dirname(fileURLToPath(import.meta.url))
       const meta: Record<string, string> = await fs.readJSON(join(fnclipPath, 'funcs-meta.json'))
 
       // handle function files
