@@ -35,9 +35,10 @@
     "build": "tsdown",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "release": "pnpm typecheck && bumpp",
+    "release": "pnpm typecheck && pnpm prepare && bumpp",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "esno scripts/update-funcs-meta.ts"
   },
   "dependencies": {
     "ansis": "^4.1.0",

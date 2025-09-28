@@ -1,8 +1,9 @@
 {
   "pipe": "functions/function/pipe/index",
   "objectEntries": "functions/object/objectEntries/index",
-  "objectMap": "functions/object/objectMap/index",
   "objectKeys": "functions/object/objectKeys/index",
+  "objectMap": "functions/object/objectMap/index",
+  "isPromise": "functions/other/isPromise/index",
   "makeDestructurable": "functions/other/makeDestructurable/index",
   "nonNullable": "functions/other/nonNullable/index",
   "createPromiseQueue": "functions/promise/createPromiseQueue/index"

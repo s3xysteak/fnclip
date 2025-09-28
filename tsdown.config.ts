@@ -1,6 +1,6 @@
-import fs from 'fs-extra'
 import { glob } from 'tinyglobby'
 import { defineConfig } from 'tsdown'
+import { updateFuncsMeta } from './scripts/share'
 
 export default defineConfig(async () => {
   const files = await glob('src/functions/*/*/index.ts')
@@ -17,15 +17,7 @@ export default defineConfig(async () => {
     publint: true,
     hooks(hooks) {
       // update funcs-meta.json
-      hooks.hook('build:prepare', async () => {
-        await fs.writeFile(
-          'src/funcs-meta.json',
-          JSON.stringify(Object.fromEntries(files.map(p => [
-            p.split('/')[3],
-            p.replace('src/', '').replace('.ts', ''),
-          ])), null, 2),
-        )
-      })
+      hooks.hook('build:prepare', () => updateFuncsMeta(files))
     },
   }
 })
