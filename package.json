@@ -35,7 +35,7 @@
     "build": "tsdown",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "release": "pnpm typecheck && pnpm prepare && bumpp",
+    "release": "pnpm typecheck && bumpp",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "esno scripts/update-funcs-meta.ts"
@@ -55,6 +55,7 @@
     "@types/node": "^24.4.0",
     "bumpp": "^10.2.3",
     "eslint": "^9.35.0",
+    "esno": "^4.8.0",
     "pkg-types": "^2.3.0",
     "publint": "^0.3.12",
     "tinyglobby": "^0.2.15",
