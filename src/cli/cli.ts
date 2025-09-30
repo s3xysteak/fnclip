@@ -9,7 +9,7 @@ const cli = cac('fnclip')
 cli.help().version(version)
 
 cli
-  .command('add [...funcs]', 'Add functions to the project', {
+  .command('add|i|install [...funcs]', 'Add functions to the project (alias: i, install)', {
     ignoreOptionDefaultValue: true,
     allowUnknownOptions: true,
   })
