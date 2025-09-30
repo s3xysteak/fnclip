@@ -36,6 +36,8 @@ Add or update `src/utils/fnclip/index.ts` `->` like `export * from './xxx.ts'`.
 pnpx fnclip add pipe
 ```
 
+(Or use alias `add|i|install`)
+
 ### change target path
 
 Add a function to `packages/other/fnclip/pipe.ts`.
