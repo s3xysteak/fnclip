@@ -6,5 +6,6 @@
   "objectEntries": "functions/object/objectEntries/index",
   "objectKeys": "functions/object/objectKeys/index",
   "objectMap": "functions/object/objectMap/index",
-  "pipe": "functions/function/pipe/index"
+  "pipe": "functions/function/pipe/index",
+  "randomInt": "functions/number/randomInt/index"
 }

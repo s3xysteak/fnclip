@@ -10,6 +10,14 @@ Just like many other tool libraries, but **you can use only the functions you ne
 
 Sometimes I just want maybe one tool function, but I had to install a whole library. When I tried to just copy what I want, I found a lots of complex dependencies... Which is so annoying. Thus this library was born.
 
+## QUICK START!
+
+```sh
+npx fnclip add pipe
+```
+
+This will add `pipe` function to your `src/utils/fnclip/pipe.js`, add generate `src/utils/fnclip/index.js` to export it.
+
 ## ✨ Features
 
 1. Each single file under `src/functions/` represents an independent function without any dependencies, you can copy and use it directly!
@@ -17,9 +25,11 @@ Sometimes I just want maybe one tool function, but I had to install a whole libr
 3. Both support js/ts. It will automatically find out what you are using, but you can still indicate it manually. For js, it will provide `d.ts`.
 4. The cli only support nodejs currently. But you can still just copy the file you want!
 
-## 🚀 example (quick start!)
+## 🚀 Usage
 
 To check all details, please use `--help`!
+
+Now have commands `add`, `clear`, `list`.
 
 ```sh
 npx fnclip -h
@@ -94,12 +104,12 @@ npm fnclip:add pipe # add pipe function
 
 ### ... and more!
 
-Please refer to `--help`!
+Please refer to `--help`
 
 ```sh
 npx fnclip clear # remove all fnclip functions
 
-npx fnclip list # list all fnclip installed functions
+npx fnclip list # list all installed functions
 npx fnclip list --remote # list all fnclip functions
 ```
 
