@@ -1,10 +1,10 @@
 {
-  "pipe": "functions/function/pipe/index",
-  "objectEntries": "functions/object/objectEntries/index",
-  "objectKeys": "functions/object/objectKeys/index",
-  "objectMap": "functions/object/objectMap/index",
+  "createPromiseQueue": "functions/promise/createPromiseQueue/index",
   "isPromise": "functions/other/isPromise/index",
   "makeDestructurable": "functions/other/makeDestructurable/index",
   "nonNullable": "functions/other/nonNullable/index",
-  "createPromiseQueue": "functions/promise/createPromiseQueue/index"
+  "objectEntries": "functions/object/objectEntries/index",
+  "objectKeys": "functions/object/objectKeys/index",
+  "objectMap": "functions/object/objectMap/index",
+  "pipe": "functions/function/pipe/index"
 }

@@ -1,8 +1,9 @@
 import process from 'node:process'
 import { cac } from 'cac'
 import { consola } from 'consola'
-import { version } from '../package.json'
-import { add, clear } from './index'
+import { version } from '../../package.json'
+import { add } from './add'
+import { clear } from './clear'
 
 const cli = cac('fnclip')
 cli.help().version(version)

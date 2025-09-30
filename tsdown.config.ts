@@ -20,10 +20,18 @@ export default defineConfig(async () => {
       hooks.hook('build:prepare', async () => {
         await fs.writeFile(
           'src/funcs-meta.json',
-          JSON.stringify(Object.fromEntries((files).map(p => [
-            p.split('/')[3],
-            p.replace('src/', '').replace('.ts', ''),
-          ])), null, 2),
+          JSON.stringify(
+            Object.fromEntries(
+              (files)
+                .map(p => [
+                  p.split('/')[3],
+                  p.replace('src/', '').replace('.ts', ''),
+                ])
+                .sort(),
+            ),
+            null,
+            2,
+          ),
         )
       })
     },
