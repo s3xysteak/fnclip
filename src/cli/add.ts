@@ -1,10 +1,12 @@
-import type { AddOptions } from './options'
+import type { PackageJson } from 'pkg-types'
+import type { BaseOptions } from './options'
 import { fileURLToPath } from 'node:url'
 import { cyan } from 'ansis'
 import consola from 'consola'
+import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
 import { dirname, join } from 'pathe'
-import { handleAddOptions } from './options'
+import { DEFAULT_CWD, DEFAULT_DIR } from './options'
 
 export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
   const opt = await handleAddOptions(options)
@@ -86,4 +88,31 @@ function addIgnoreToContent(content: string) {
 
 `
   return content.includes(comments) ? content : comments + content
+}
+
+export async function handleAddOptions(options: Partial<AddOptions>): Promise<AddOptions> {
+  const cwd = options.cwd || DEFAULT_CWD
+
+  let ts = false
+  const packageJsonPath = findPackage({ cwd })
+  if (packageJsonPath) {
+    const contents = await fs.readFile(packageJsonPath, 'utf8')
+    const obj: PackageJson = JSON.parse(contents)
+    if (obj?.dependencies?.typescript || obj?.devDependencies?.typescript) {
+      ts = true
+    }
+  }
+
+  const defaultOptions: AddOptions = {
+    dir: DEFAULT_DIR,
+    cwd,
+    ts,
+    index: true,
+  }
+  return Object.assign(defaultOptions, options)
+}
+
+export interface AddOptions extends BaseOptions {
+  ts: boolean
+  index: boolean
 }
