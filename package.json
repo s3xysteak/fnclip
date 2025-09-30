@@ -1,7 +1,7 @@
 {
   "name": "fnclip",
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "packageManager": "pnpm@10.17.1",
   "description": "_description_",
   "author": "s3xysteak",
