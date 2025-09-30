@@ -1,5 +1,6 @@
 {
   "createPromiseQueue": "functions/promise/createPromiseQueue/index",
+  "get": "functions/object/get/index",
   "isPromise": "functions/other/isPromise/index",
   "makeDestructurable": "functions/other/makeDestructurable/index",
   "nonNullable": "functions/other/nonNullable/index",
