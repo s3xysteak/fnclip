@@ -22,8 +22,8 @@ Sometimes I just want maybe one tool function, but I had to install a whole libr
 To check all details, please use `--help`!
 
 ```sh
-pnpx fnclip -h
-pnpx fnclip add -h
+npx fnclip -h
+npx fnclip add -h
 ```
 
 ### basic
@@ -33,7 +33,7 @@ Add a function to `src/utils/fnclip/pipe.ts`.
 Add or update `src/utils/fnclip/index.ts` `->` like `export * from './xxx.ts'`.
 
 ```sh
-pnpx fnclip add pipe
+npx fnclip add pipe
 ```
 
 (Or use alias `add|i|install`)
@@ -45,7 +45,7 @@ Add a function to `packages/other/fnclip/pipe.ts`.
 Add or update index like above.
 
 ```sh
-pnpx fnclip add pipe --cwd packages/other --dir fnclip
+npx fnclip add pipe --cwd packages/other --dir fnclip
 ```
 
 ### if you do not want `index`
@@ -53,7 +53,7 @@ pnpx fnclip add pipe --cwd packages/other --dir fnclip
 This will prevent adding/updating index file.
 
 ```sh
-pnpx fnclip add pipe --no-index
+npx fnclip add pipe --no-index
 ```
 
 ### typescript or javascript
@@ -61,8 +61,8 @@ pnpx fnclip add pipe --no-index
 Manually choose ts or js.
 
 ```sh
-pnpx fnclip add pipe --ts
-pnpx fnclip add pipe --no-ts
+npx fnclip add pipe --ts
+npx fnclip add pipe --no-ts
 ```
 
 ### add a lot of functions at once
@@ -70,7 +70,7 @@ pnpx fnclip add pipe --no-ts
 Mostly use it while starting a new project.
 
 ```sh
-pnpx fnclip add objectKeys objectMap nonNullable
+npx fnclip add objectKeys objectMap nonNullable
 ```
 
 ### Pre configuration (✨Recommend!)
@@ -80,8 +80,8 @@ Just prepare for it in `package.json/scripts`.
 ```json
 {
   "scripts": {
-    "fnclip:add": "pnpx fnclip@v0.0.2 add --no-index --ts --dir src/utils/my-fn",
-    "fnclip:clear": "pnpx fnclip@v0.0.2 clear --dir src/utils/my-fn"
+    "fnclip:add": "npx fnclip add --no-index --ts --dir src/utils/my-fn",
+    "fnclip:clear": "npx fnclip clear --dir src/utils/my-fn"
   }
 }
 ```
@@ -89,7 +89,18 @@ Just prepare for it in `package.json/scripts`.
 To use it:
 
 ```sh
-pnpm fnclip:add pipe # add pipe function
+npm fnclip:add pipe # add pipe function
+```
+
+### ... and more!
+
+Please refer to `--help`!
+
+```sh
+npx fnclip clear # remove all fnclip functions
+
+npx fnclip list # list all fnclip installed functions
+npx fnclip list --remote # list all fnclip functions
 ```
 
 ## License

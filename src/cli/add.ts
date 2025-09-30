@@ -1,12 +1,11 @@
 import type { PackageJson } from 'pkg-types'
 import type { BaseOptions } from './options'
-import { fileURLToPath } from 'node:url'
 import { cyan } from 'ansis'
 import consola from 'consola'
 import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
-import { dirname, join } from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR } from './options'
+import { join } from 'pathe'
+import { DEFAULT_CWD, DEFAULT_DIR, fnclipPath, getMeta } from './options'
 
 export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
   const opt = await handleAddOptions(options)
@@ -31,8 +30,7 @@ function createCtx(funcs: string[], options: AddOptions) {
 
   return {
     handleFunctions: async () => {
-      const fnclipPath = dirname(fileURLToPath(import.meta.url))
-      const meta: Record<string, string> = await fs.readJSON(join(fnclipPath, 'funcs-meta.json'))
+      const meta = await getMeta()
 
       // handle function files
       await fs.ensureDir(dirPath)

@@ -12,12 +12,13 @@ export async function clear(options: Partial<ClearOptions> = {}) {
 }
 
 export function handleClearOptions(options: Partial<ClearOptions>): ClearOptions {
+  const defaultOptions: ClearOptions = {
+    dir: DEFAULT_DIR,
+    cwd: DEFAULT_CWD,
+  }
   return Object.assign(
     {},
-    {
-      dir: DEFAULT_DIR,
-      cwd: DEFAULT_CWD,
-    },
+    defaultOptions,
     options,
   )
 }
