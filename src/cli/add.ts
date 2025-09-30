@@ -5,7 +5,12 @@ import consola from 'consola'
 import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR, fnclipPath, getMeta } from './options'
+import { DEFAULT_CWD, DEFAULT_DIR, exportContent, fnclipPath, getMeta } from './options'
+
+export interface AddOptions extends BaseOptions {
+  ts: boolean
+  index: boolean
+}
 
 export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
   const opt = await handleAddOptions(options)
@@ -67,7 +72,6 @@ function createCtx(funcs: string[], options: AddOptions) {
       await fs.ensureFile(indexPath)
       const indexContent = await fs.readFile(indexPath, 'utf-8')
 
-      const exportContent = (f: string) => `export * from './${f}';\n`
       await fs.writeFile(
         indexPath,
         addIgnoreToContent(indexContent + funcs.map((f) => {
@@ -108,9 +112,4 @@ export async function handleAddOptions(options: Partial<AddOptions>): Promise<Ad
     index: true,
   }
   return Object.assign(defaultOptions, options)
-}
-
-export interface AddOptions extends BaseOptions {
-  ts: boolean
-  index: boolean
 }

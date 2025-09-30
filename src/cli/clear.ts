@@ -4,6 +4,8 @@ import fs from 'fs-extra'
 import { join } from 'pathe'
 import { DEFAULT_CWD, DEFAULT_DIR } from './options'
 
+export interface ClearOptions extends BaseOptions {}
+
 export async function clear(options: Partial<ClearOptions> = {}) {
   const { dir, cwd } = handleClearOptions(options)
 
@@ -22,4 +24,3 @@ export function handleClearOptions(options: Partial<ClearOptions>): ClearOptions
     options,
   )
 }
-export interface ClearOptions extends BaseOptions {}

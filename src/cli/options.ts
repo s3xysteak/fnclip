@@ -16,3 +16,5 @@ export async function getMeta() {
   const res: Record<string, string> = await fs.readJson(join(fnclipPath, 'funcs-meta.json'))
   return res
 }
+
+export const exportContent = (f: string) => `export * from './${f}';\n`

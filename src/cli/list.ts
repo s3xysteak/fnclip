@@ -5,6 +5,10 @@ import fs from 'fs-extra'
 import { join } from 'pathe'
 import { DEFAULT_CWD, DEFAULT_DIR, getMeta } from './options'
 
+export interface ListOptions extends BaseOptions {
+  remote: boolean
+}
+
 export async function list(options: Partial<ListOptions>) {
   const opts = handleListOptions(options)
 
@@ -49,7 +53,4 @@ export function handleListOptions(opts: Partial<ListOptions>): ListOptions {
     defaultOptions,
     opts,
   )
-}
-export interface ListOptions extends BaseOptions {
-  remote: boolean
 }
