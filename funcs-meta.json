@@ -1,6 +1,8 @@
 {
+  "createMeta": "functions/object/createMeta/index",
   "createPromiseQueue": "functions/promise/createPromiseQueue/index",
   "get": "functions/object/get/index",
+  "isInRange": "functions/number/isInRange/index",
   "isPromise": "functions/other/isPromise/index",
   "makeDestructurable": "functions/other/makeDestructurable/index",
   "nonNullable": "functions/other/nonNullable/index",
