@@ -21,7 +21,7 @@ This will add `pipe` function to your `src/utils/fnclip/pipe.js`, add generate `
 ## ✨ Features
 
 1. Each single file under `src/functions/` represents an independent function without any dependencies, you can copy and use it directly!
-2. And also there is a cli for your convenience, check below.
+2. And also there is a **z** for your convenience, check below.
 3. Both support js/ts. It will automatically find out what you are using, but you can still indicate it manually. For js, it will provide `d.ts`.
 4. The cli only support nodejs currently. But you can still just copy the file you want!
 
@@ -40,7 +40,7 @@ npx fnclip add -h
 
 Add a function to `src/utils/fnclip/pipe.ts`.
 
-Add or update `src/utils/fnclip/index.ts` `->` like `export * from './xxx.ts'`.
+Add or update `src/utils/fnclip/index.ts` like `export * from './xxx.ts'`.
 
 ```sh
 npx fnclip add pipe
@@ -68,7 +68,7 @@ npx fnclip add pipe --no-index
 
 ### typescript or javascript
 
-Manually choose ts or js.
+By default it will automatically choose ts or js. Or you can manually specify it:
 
 ```sh
 npx fnclip add pipe --ts
@@ -107,6 +107,10 @@ npm fnclip:add pipe # add pipe function
 Please refer to `--help`
 
 ```sh
+npx fnclip add pipe
+
+npx fnclip remove pipe
+
 npx fnclip clear # remove all fnclip functions
 
 npx fnclip list # list all installed functions
