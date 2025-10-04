@@ -2,7 +2,7 @@
   "name": "fnclip",
   "type": "module",
   "version": "0.1.0",
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.18.0",
   "description": "_description_",
   "author": "s3xysteak",
   "license": "MIT",
@@ -53,15 +53,15 @@
   "devDependencies": {
     "@antfu/eslint-config": "^5.4.1",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^24.6.0",
+    "@types/node": "^24.6.2",
     "bumpp": "^10.2.3",
-    "eslint": "^9.36.0",
+    "eslint": "^9.37.0",
     "esno": "^4.8.0",
     "pkg-types": "^2.3.0",
     "publint": "^0.3.13",
     "tinyglobby": "^0.2.15",
-    "tsdown": "^0.15.5",
-    "typescript": "^5.9.2",
+    "tsdown": "^0.15.6",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }
 }
