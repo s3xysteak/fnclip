@@ -22,6 +22,7 @@ cli
   .option('--cwd <path>', 'The base path')
   .option('--ts', 'Enable TypeScript mode')
   .option('--index', 'Generate index file to export functions')
+  .option('--index-path', 'The path of index file')
   .action(add)
 
 cli

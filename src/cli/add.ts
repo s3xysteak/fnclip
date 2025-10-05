@@ -5,11 +5,12 @@ import consola from 'consola'
 import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR, exportContent, fnclipPath, getMeta } from './options'
+import { DEFAULT_CWD, DEFAULT_DIR, ensureExt, exportContent, fnclipPath, getMeta } from './options'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean
   index: boolean
+  indexPath: string
 }
 
 export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
@@ -30,6 +31,7 @@ function createCtx(funcs: string[], options: AddOptions) {
     dir,
     cwd,
     ts,
+    indexPath,
   } = options
   const dirPath = join(cwd, dir)
 
@@ -44,36 +46,36 @@ function createCtx(funcs: string[], options: AddOptions) {
 
         for (const ext of exts) {
           await fs.copy(
-            join(fnclipPath, `${meta[func]}${ext}`),
-            join(dirPath, `${func}${ext}`),
+            join(fnclipPath, ensureExt(meta[func], ext)),
+            join(dirPath, ensureExt(func, ext)),
           )
 
           // add comments to disable eslint/prettier etc.
-          const content = await fs.readFile(join(dirPath, `${func}${ext}`), 'utf-8')
-          await fs.writeFile(join(dirPath, `${func}${ext}`), addIgnoreToContent(content))
+          const content = await fs.readFile(join(dirPath, ensureExt(func, ext)), 'utf-8')
+          await fs.writeFile(join(dirPath, ensureExt(func, ext)), addIgnoreToContent(content))
         }
       }
     },
 
     handleIndex: async () => {
-      const indexPathNoExt = join(dirPath, 'index')
+      const indexPathMaybeExt = join(dirPath, indexPath)
 
       // check exist index file
-      let indexPath: string
+      let indexRealPath: string
       for (const ext of ['.ts', '.js']) {
-        if (await fs.exists(indexPathNoExt + ext)) {
-          indexPath = indexPathNoExt + ext
+        if (await fs.exists(ensureExt(indexPathMaybeExt, ext))) {
+          indexRealPath = ensureExt(indexPathMaybeExt, ext)
           break
         }
       }
 
-      indexPath ??= indexPathNoExt + (ts ? '.ts' : '.js')
+      indexRealPath ??= indexPathMaybeExt + (ts ? '.ts' : '.js')
 
-      await fs.ensureFile(indexPath)
-      const indexContent = await fs.readFile(indexPath, 'utf-8')
+      await fs.ensureFile(indexRealPath)
+      const indexContent = await fs.readFile(indexRealPath, 'utf-8')
 
       await fs.writeFile(
-        indexPath,
+        indexRealPath,
         addIgnoreToContent(indexContent + funcs.map((f) => {
           const val = exportContent(f)
           return indexContent.includes(val) ? '' : val
@@ -110,6 +112,7 @@ export async function handleAddOptions(options: Partial<AddOptions>): Promise<Ad
     cwd,
     ts,
     index: true,
+    indexPath: './index',
   }
   return Object.assign(defaultOptions, options)
 }
