@@ -4,7 +4,7 @@ import consola from 'consola'
 import fs from 'fs-extra'
 import { join } from 'pathe'
 import { handleOptions } from './shared/options'
-import { exportContent, getMeta } from './shared/utils'
+import { getMeta, updateIndex } from './shared/utils'
 
 export interface RemoveOptions extends BaseOptions { }
 
@@ -39,14 +39,7 @@ export async function remove(funcs: string[], options: Partial<RemoveOptions>) {
     }
 
     // index
-    for (const ext of ['.js', '.ts']) {
-      const path = join(dirPath, `index${ext}`)
-      if (await fs.exists(path)) {
-        const content = await fs.readFile(path, 'utf-8')
-        await fs.writeFile(path, content.replace(exportContent(func), ''))
-        break
-      }
-    }
+    await updateIndex(opts)
 
     logger.addSuccess(func)
   }

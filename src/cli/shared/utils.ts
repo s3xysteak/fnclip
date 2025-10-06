@@ -1,4 +1,5 @@
 import type { PackageJson } from 'pkg-types'
+import type { FnclipOptions } from './options'
 import * as pkg from 'empathic/package'
 import fs from 'fs-extra'
 import * as path from 'pathe'
@@ -22,4 +23,37 @@ export async function isTypescript(cwd: string) {
 
   const obj: PackageJson = await fs.readJson(packageJsonPath)
   return !!(obj.dependencies?.typescript || obj.devDependencies?.typescript)
+}
+
+export async function updateIndex(opts: FnclipOptions) {
+  if (!opts.index)
+    return
+
+  const dirPath = path.join(opts.cwd, opts.dir)
+  const indexPathMaybeExt = path.join(dirPath, opts.indexPath)
+
+  // check exist index file
+  let indexRealPath: string
+  for (const ext of ['.ts', '.js']) {
+    const targetPath = ensureExt(indexPathMaybeExt, ext)
+    if (await fs.exists(targetPath)) {
+      indexRealPath = targetPath
+      break
+    }
+  }
+
+  indexRealPath ??= ensureExt(indexPathMaybeExt, (opts.ts ? '.ts' : '.js'))
+  await fs.ensureFile(indexRealPath)
+
+  const funcs = await fs.readdir(dirPath)
+  await fs.writeFile(indexRealPath, addIgnoreToContent(funcs.map(exportContent).join('')))
+}
+
+export function addIgnoreToContent(content: string) {
+  const comments = `/* eslint-disable */
+/* prettier-ignore */
+// @ts-nocheck
+
+`
+  return content.includes(comments) ? content : comments + content
 }

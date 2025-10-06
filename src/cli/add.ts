@@ -5,7 +5,7 @@ import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
 import { handleOptions } from './shared/options'
-import { ensureExt, exportContent, getMeta } from './shared/utils'
+import { addIgnoreToContent, ensureExt, getMeta, updateIndex } from './shared/utils'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean
@@ -39,40 +39,6 @@ export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
   }
   consola.success(`Successfully add ${funcs.map(cyan).join(', ')}.`)
 
-  if (!opts.index)
-    return
-  const indexPathMaybeExt = path.join(dirPath, opts.indexPath)
-
-  // check exist index file
-  let indexRealPath: string
-  for (const ext of ['.ts', '.js']) {
-    const targetPath = ensureExt(indexPathMaybeExt, ext)
-    if (await fs.exists(targetPath)) {
-      indexRealPath = targetPath
-      break
-    }
-  }
-
-  indexRealPath ??= indexPathMaybeExt + (opts.ts ? '.ts' : '.js')
-
-  await fs.ensureFile(indexRealPath)
-  const indexContent = await fs.readFile(indexRealPath, 'utf-8')
-
-  await fs.writeFile(
-    indexRealPath,
-    addIgnoreToContent(indexContent + funcs.map((f) => {
-      const val = exportContent(f)
-      return indexContent.includes(val) ? '' : val
-    }).join('\n')),
-  )
+  await updateIndex(opts)
   consola.success(`Successfully update ${cyan`index`} file.`)
-}
-
-function addIgnoreToContent(content: string) {
-  const comments = `/* eslint-disable */
-/* prettier-ignore */
-// @ts-nocheck
-
-`
-  return content.includes(comments) ? content : comments + content
 }
