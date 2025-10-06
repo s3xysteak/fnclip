@@ -1,9 +1,10 @@
-import type { BaseOptions } from './options'
+import type { BaseOptions } from './shared/options'
 import { cyan } from 'ansis'
 import consola from 'consola'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { getMeta, handleOptions } from './options'
+import { handleOptions } from './shared/options'
+import { getMeta } from './shared/utils'
 
 export interface ListOptions extends BaseOptions {
   remote: boolean

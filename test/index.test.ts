@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ensureExt } from '../src/cli/options'
+import { ensureExt } from '../src/cli/shared/utils'
 
 describe('options', () => {
   it('ensureExt', () => {
