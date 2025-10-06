@@ -1,11 +1,9 @@
-import type { PackageJson } from 'pkg-types'
 import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
-import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
 import * as path from 'pathe'
-import { baseOptions, ensureExt, exportContent, fnclipPath, getMeta } from './options'
+import { baseOptions, ensureExt, exportContent, fnclipPath, getMeta, isTypescript } from './options'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean
@@ -80,20 +78,10 @@ function addIgnoreToContent(content: string) {
 export async function handleAddOptions(options: Partial<AddOptions>): Promise<AddOptions> {
   const cwd = options.cwd || baseOptions.cwd
 
-  let ts = false
-  const packageJsonPath = findPackage({ cwd })
-  if (packageJsonPath) {
-    const contents = await fs.readFile(packageJsonPath, 'utf8')
-    const obj: PackageJson = JSON.parse(contents)
-    if (obj?.dependencies?.typescript || obj?.devDependencies?.typescript) {
-      ts = true
-    }
-  }
-
   const defaultOptions: AddOptions = {
     dir: baseOptions.dir,
     cwd,
-    ts,
+    ts: await isTypescript(cwd) ?? false,
     index: true,
     indexPath: './index',
   }
