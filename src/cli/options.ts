@@ -4,8 +4,10 @@ import { fnclipPath } from '..'
 
 export { fnclipPath }
 
-export const DEFAULT_DIR = 'src/utils/fnclip'
-export const DEFAULT_CWD = '.'
+export const baseOptions: Readonly<BaseOptions> = {
+  dir: 'src/utils/fnclip',
+  cwd: '.',
+}
 
 export interface BaseOptions {
   dir: string

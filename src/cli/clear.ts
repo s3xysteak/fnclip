@@ -1,8 +1,9 @@
 import type { BaseOptions } from './options'
 import consola from 'consola'
+import defu from 'defu'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR } from './options'
+import { baseOptions } from './options'
 
 export interface ClearOptions extends BaseOptions {}
 
@@ -14,13 +15,15 @@ export async function clear(options: Partial<ClearOptions> = {}) {
 }
 
 export function handleClearOptions(options: Partial<ClearOptions>): ClearOptions {
-  const defaultOptions: ClearOptions = {
-    dir: DEFAULT_DIR,
-    cwd: DEFAULT_CWD,
-  }
+  return defu(
+    options,
+    {},
+    baseOptions,
+  )
   return Object.assign(
     {},
-    defaultOptions,
+    baseOptions,
+    {},
     options,
   )
 }

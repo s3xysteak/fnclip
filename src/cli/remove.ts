@@ -1,9 +1,10 @@
 import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
+import defu from 'defu'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR, exportContent, getMeta } from './options'
+import { baseOptions, exportContent, getMeta } from './options'
 
 export interface RemoveOptions extends BaseOptions { }
 
@@ -72,14 +73,9 @@ function createLogger() {
 }
 
 export function handleRemoveOptions(opts: Partial<RemoveOptions>): RemoveOptions {
-  const defaultOptions: RemoveOptions = {
-    cwd: DEFAULT_CWD,
-    dir: DEFAULT_DIR,
-  }
-
-  return Object.assign(
-    {},
-    defaultOptions,
+  return defu(
     opts,
+    {},
+    baseOptions,
   )
 }

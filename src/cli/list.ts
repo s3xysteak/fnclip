@@ -1,9 +1,10 @@
 import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
+import defu from 'defu'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR, getMeta } from './options'
+import { baseOptions, getMeta } from './options'
 
 export interface ListOptions extends BaseOptions {
   remote: boolean
@@ -43,14 +44,11 @@ export async function list(options: Partial<ListOptions>) {
 }
 
 export function handleListOptions(opts: Partial<ListOptions>): ListOptions {
-  const defaultOptions: ListOptions = {
-    remote: false,
-    cwd: DEFAULT_CWD,
-    dir: DEFAULT_DIR,
-  }
-  return Object.assign(
-    {},
-    defaultOptions,
+  return defu(
     opts,
+    <ListOptions>{
+      remote: false,
+    },
+    baseOptions,
   )
 }

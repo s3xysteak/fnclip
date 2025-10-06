@@ -5,7 +5,7 @@ import consola from 'consola'
 import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
 import * as path from 'pathe'
-import { DEFAULT_CWD, DEFAULT_DIR, ensureExt, exportContent, fnclipPath, getMeta } from './options'
+import { baseOptions, ensureExt, exportContent, fnclipPath, getMeta } from './options'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean
@@ -78,7 +78,7 @@ function addIgnoreToContent(content: string) {
 }
 
 export async function handleAddOptions(options: Partial<AddOptions>): Promise<AddOptions> {
-  const cwd = options.cwd || DEFAULT_CWD
+  const cwd = options.cwd || baseOptions.cwd
 
   let ts = false
   const packageJsonPath = findPackage({ cwd })
@@ -91,7 +91,7 @@ export async function handleAddOptions(options: Partial<AddOptions>): Promise<Ad
   }
 
   const defaultOptions: AddOptions = {
-    dir: DEFAULT_DIR,
+    dir: baseOptions.dir,
     cwd,
     ts,
     index: true,
