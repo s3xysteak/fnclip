@@ -1,20 +1,52 @@
 import type { PackageJson } from 'pkg-types'
+import type { AddOptions, ClearOptions, ConfigOptions, ListOptions, RemoveOptions } from '..'
+import defu from 'defu'
 import * as pkg from 'empathic/package'
 import fs from 'fs-extra'
 import * as path from 'pathe'
-
+import { loadConfig } from 'unconfig'
 import { fnclipPath } from '..'
 
 export { fnclipPath }
 
-export const baseOptions: Readonly<BaseOptions> = {
-  dir: 'src/utils/fnclip',
-  cwd: '.',
-}
-
 export interface BaseOptions {
   dir: string
   cwd: string
+}
+
+// for dev
+type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
+type Options = AddOptions & ClearOptions & ConfigOptions & ListOptions & RemoveOptions
+type _ = Expand<Options>
+export async function handleOptions(options: Partial<Options> = {}) {
+  return defu(
+    options,
+
+    // load config
+    await loadConfig<Partial<Options>>({
+      sources: [
+        {
+          files: 'fnclip.config',
+          rewrite: config => typeof config === 'function' ? config() : config,
+        },
+        {
+          files: 'package.json',
+          extensions: [],
+          rewrite: (config: any) => ({ ts: !!(config.dependencies?.typescript || config.devDependencies?.typescript) }),
+        },
+      ],
+      merge: true,
+    }),
+
+    // default options
+    <Options>{
+      index: true,
+      indexPath: './index',
+      remote: false,
+      dir: 'src/utils/fnclip',
+      cwd: '.',
+    },
+  )
 }
 
 export async function getMeta() {
@@ -28,8 +60,8 @@ export function ensureExt(fullname: string, ext: string) {
   return path.extname(fullname) ? fullname : `${fullname}${ext}`
 }
 
-export async function isTypescript(cwd?: string) {
-  const packageJsonPath = pkg.up({ cwd: cwd ?? baseOptions.cwd })
+export async function isTypescript(cwd: string) {
+  const packageJsonPath = pkg.up({ cwd })
   if (!packageJsonPath)
     return
 

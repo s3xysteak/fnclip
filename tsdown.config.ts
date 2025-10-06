@@ -5,6 +5,7 @@ import { updateFuncsMeta } from './scripts/shared.ts'
 
 export default defineConfig(async () => {
   const files = await glob('src/functions/*/*/index.ts')
+  const configFiles = await glob('src/functions/config/config/fnclip.config.{js,ts}')
 
   return {
     entry: [
@@ -13,6 +14,7 @@ export default defineConfig(async () => {
     ],
     copy: [
       ...files.map(path => ({ from: path, to: path.replace('src', 'dist') })),
+      ...configFiles.map(path => ({ from: path, to: path.replace('src', 'dist') })),
       'funcs-meta.json',
     ],
     publint: true,

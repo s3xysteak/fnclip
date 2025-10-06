@@ -1,17 +1,16 @@
 import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
-import defu from 'defu'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { baseOptions, getMeta } from './options'
+import { getMeta, handleOptions } from './options'
 
 export interface ListOptions extends BaseOptions {
   remote: boolean
 }
 
 export async function list(options: Partial<ListOptions>) {
-  const opts = handleListOptions(options)
+  const opts = await handleOptions(options)
 
   const funcs = Object.keys(await getMeta())
 
@@ -41,14 +40,4 @@ export async function list(options: Partial<ListOptions>) {
       )
     }
   }
-}
-
-export function handleListOptions(opts: Partial<ListOptions>): ListOptions {
-  return defu(
-    opts,
-    <ListOptions>{
-      remote: false,
-    },
-    baseOptions,
-  )
 }

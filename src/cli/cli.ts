@@ -1,12 +1,8 @@
 import process from 'node:process'
 import { cac } from 'cac'
 import { consola } from 'consola'
+import { add, clear, config, list, remove } from '..'
 import { version } from '../../package.json'
-
-import { add } from './add'
-import { clear } from './clear'
-import { list } from './list'
-import { remove } from './remove'
 
 const cli = cac('fnclip')
 cli.help().version(version)
@@ -56,6 +52,16 @@ cli
   .option('-d, --dir <path>', 'The target folder')
   .option('--cwd <path>', 'The base path')
   .action(remove)
+
+cli
+  .command('config', 'Add fnclip config file to your project', {
+    ignoreOptionDefaultValue: true,
+    allowUnknownOptions: true,
+  })
+  .option('--cwd <path>', 'The base path')
+  .option('--ts', 'Enable TypeScript mode')
+  .option('-d, --dir <path>', 'The target folder')
+  .action(config)
 
 export async function runCLI() {
   cli.parse(process.argv, { run: false })

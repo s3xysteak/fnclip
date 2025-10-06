@@ -1,15 +1,14 @@
 import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
-import defu from 'defu'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { baseOptions, exportContent, getMeta } from './options'
+import { exportContent, getMeta, handleOptions } from './options'
 
 export interface RemoveOptions extends BaseOptions { }
 
 export async function remove(funcs: string[], options: Partial<RemoveOptions>) {
-  const opts = handleRemoveOptions(options)
+  const opts = await handleOptions(options)
 
   const logger = createLogger()
   if (funcs.length === 0)
@@ -70,12 +69,4 @@ function createLogger() {
     },
     addSuccess: (func: string) => successFuncs.push(func),
   }
-}
-
-export function handleRemoveOptions(opts: Partial<RemoveOptions>): RemoveOptions {
-  return defu(
-    opts,
-    {},
-    baseOptions,
-  )
 }

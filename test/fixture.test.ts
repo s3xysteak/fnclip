@@ -36,6 +36,13 @@ describe('fnclip cli', () => {
     await fs.remove(p('src/utils/fnclip.js'))
     await run('pnpm fnclip rm isPromise')
   })
+
+  it('config', async () => {
+    await run('pnpm fnclip config')
+    expect(await fs.pathExists(p('fnclip.config.js'))).toBe(true)
+
+    await fs.remove(p('fnclip.config.js'))
+  })
 })
 
 async function run(command: string, args: string[] = []) {

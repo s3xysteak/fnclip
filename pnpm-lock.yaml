@@ -32,6 +32,9 @@ importers:
       pathe:
         specifier: ^2.0.3
         version: 2.0.3
+      unconfig:
+        specifier: ^7.3.3
+        version: 7.3.3
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^5.4.1

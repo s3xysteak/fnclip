@@ -1,10 +1,9 @@
 import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
-import defu from 'defu'
 import fs from 'fs-extra'
 import * as path from 'pathe'
-import { baseOptions, ensureExt, exportContent, fnclipPath, getMeta, isTypescript } from './options'
+import { ensureExt, exportContent, fnclipPath, getMeta, handleOptions } from './options'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean
@@ -13,18 +12,7 @@ export interface AddOptions extends BaseOptions {
 }
 
 export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
-  const cwd = options.cwd || baseOptions.cwd
-  const opts = defu(
-    options,
-    <AddOptions>{
-      dir: baseOptions.dir,
-      cwd,
-      ts: await isTypescript(cwd) ?? false,
-      index: true,
-      indexPath: './index',
-    },
-    baseOptions,
-  )
+  const opts = await handleOptions(options)
 
   const dirPath = path.join(opts.cwd, opts.dir)
 

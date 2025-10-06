@@ -1,4 +1,5 @@
 {
+  "config": "functions/config/config/fnclip.config",
   "createMeta": "functions/object/createMeta/index",
   "createPromiseQueue": "functions/promise/createPromiseQueue/index",
   "get": "functions/object/get/index",
