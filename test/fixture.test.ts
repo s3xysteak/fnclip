@@ -8,6 +8,13 @@ const p = (path: string) => join(fileURLToPath(new URL('.', import.meta.url)), '
 const cwd = './test/fixture'
 
 describe('fnclip cli', () => {
+  it('config', async () => {
+    await run('pnpm fnclip config --cwd ./src')
+    expect(await fs.pathExists(p('./src/fnclip.config.js'))).toBe(true)
+
+    await fs.remove(p('./src/fnclip.config.js'))
+  })
+
   it('clear', async () => {
     await run(`pnpm fnclip clear`)
     expect(await fs.pathExists(p('src/utils/fnclip'))).toBe(false)
@@ -35,13 +42,6 @@ describe('fnclip cli', () => {
 
     await fs.remove(p('src/utils/fnclip.js'))
     await run('pnpm fnclip rm isPromise')
-  })
-
-  it('config', async () => {
-    await run('pnpm fnclip config')
-    expect(await fs.pathExists(p('fnclip.config.js'))).toBe(true)
-
-    await fs.remove(p('fnclip.config.js'))
   })
 })
 

@@ -16,14 +16,17 @@ export interface BaseOptions {
 
 // for dev
 type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never
+
 type Options = AddOptions & ClearOptions & ConfigOptions & ListOptions & RemoveOptions
+
+// for dev
 type _ = Expand<Options>
 export async function handleOptions(options: Partial<Options> = {}) {
   return defu(
     options,
 
     // load config
-    await loadConfig<Partial<Options>>({
+    (await loadConfig<Partial<Options>>({
       sources: [
         {
           files: 'fnclip.config',
@@ -36,7 +39,7 @@ export async function handleOptions(options: Partial<Options> = {}) {
         },
       ],
       merge: true,
-    }),
+    })).config,
 
     // default options
     <Options>{
