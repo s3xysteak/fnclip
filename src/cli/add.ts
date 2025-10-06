@@ -4,7 +4,7 @@ import { cyan } from 'ansis'
 import consola from 'consola'
 import { up as findPackage } from 'empathic/package'
 import fs from 'fs-extra'
-import { join } from 'pathe'
+import * as path from 'pathe'
 import { DEFAULT_CWD, DEFAULT_DIR, ensureExt, exportContent, fnclipPath, getMeta } from './options'
 
 export interface AddOptions extends BaseOptions {
@@ -14,75 +14,58 @@ export interface AddOptions extends BaseOptions {
 }
 
 export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
-  const opt = await handleAddOptions(options)
-  const ctx = createCtx(funcs, opt)
+  const opts = await handleAddOptions(options)
 
-  await ctx.handleFunctions()
+  const dirPath = path.join(opts.cwd, opts.dir)
+
+  const meta = await getMeta()
+
+  // handle function files
+  await fs.ensureDir(dirPath)
+  for (const func of funcs) {
+    const exts = opts.ts ? ['.ts'] : ['.js', '.d.ts']
+
+    for (const ext of exts) {
+      const targetPath = ensureExt(func, ext)
+      await fs.copy(
+        path.join(fnclipPath, ensureExt(meta[func], ext)),
+        path.join(dirPath, targetPath),
+      )
+
+      // add comments to disable eslint/prettier etc.
+      const content = await fs.readFile(path.join(dirPath, targetPath), 'utf-8')
+      await fs.writeFile(path.join(dirPath, targetPath), addIgnoreToContent(content))
+    }
+  }
   consola.success(`Successfully add ${funcs.map(cyan).join(', ')}.`)
 
-  if (!opt.index)
+  if (!opts.index)
     return
-  await ctx.handleIndex()
-  consola.success(`Successfully update ${cyan`index`} file.`)
-}
+  const indexPathMaybeExt = path.join(dirPath, opts.indexPath)
 
-function createCtx(funcs: string[], options: AddOptions) {
-  const {
-    dir,
-    cwd,
-    ts,
-    indexPath,
-  } = options
-  const dirPath = join(cwd, dir)
-
-  return {
-    handleFunctions: async () => {
-      const meta = await getMeta()
-
-      // handle function files
-      await fs.ensureDir(dirPath)
-      for (const func of funcs) {
-        const exts = ts ? ['.ts'] : ['.js', '.d.ts']
-
-        for (const ext of exts) {
-          await fs.copy(
-            join(fnclipPath, ensureExt(meta[func], ext)),
-            join(dirPath, ensureExt(func, ext)),
-          )
-
-          // add comments to disable eslint/prettier etc.
-          const content = await fs.readFile(join(dirPath, ensureExt(func, ext)), 'utf-8')
-          await fs.writeFile(join(dirPath, ensureExt(func, ext)), addIgnoreToContent(content))
-        }
-      }
-    },
-
-    handleIndex: async () => {
-      const indexPathMaybeExt = join(dirPath, indexPath)
-
-      // check exist index file
-      let indexRealPath: string
-      for (const ext of ['.ts', '.js']) {
-        if (await fs.exists(ensureExt(indexPathMaybeExt, ext))) {
-          indexRealPath = ensureExt(indexPathMaybeExt, ext)
-          break
-        }
-      }
-
-      indexRealPath ??= indexPathMaybeExt + (ts ? '.ts' : '.js')
-
-      await fs.ensureFile(indexRealPath)
-      const indexContent = await fs.readFile(indexRealPath, 'utf-8')
-
-      await fs.writeFile(
-        indexRealPath,
-        addIgnoreToContent(indexContent + funcs.map((f) => {
-          const val = exportContent(f)
-          return indexContent.includes(val) ? '' : val
-        }).join('\n')),
-      )
-    },
+  // check exist index file
+  let indexRealPath: string
+  for (const ext of ['.ts', '.js']) {
+    const targetPath = ensureExt(indexPathMaybeExt, ext)
+    if (await fs.exists(targetPath)) {
+      indexRealPath = targetPath
+      break
+    }
   }
+
+  indexRealPath ??= indexPathMaybeExt + (opts.ts ? '.ts' : '.js')
+
+  await fs.ensureFile(indexRealPath)
+  const indexContent = await fs.readFile(indexRealPath, 'utf-8')
+
+  await fs.writeFile(
+    indexRealPath,
+    addIgnoreToContent(indexContent + funcs.map((f) => {
+      const val = exportContent(f)
+      return indexContent.includes(val) ? '' : val
+    }).join('\n')),
+  )
+  consola.success(`Successfully update ${cyan`index`} file.`)
 }
 
 function addIgnoreToContent(content: string) {
