@@ -15,6 +15,8 @@ export type FnclipOptions = AddOptions & ClearOptions & ConfigOptions & ListOpti
 // for dev
 type _ = Expand<FnclipOptions>
 export async function handleOptions(options: Partial<FnclipOptions> = {}) {
+  const cwd = options.cwd ?? '.'
+
   return defu(
     options,
 
@@ -32,6 +34,7 @@ export async function handleOptions(options: Partial<FnclipOptions> = {}) {
         },
       ],
       merge: true,
+      cwd,
     })).config,
 
     // default options
@@ -40,7 +43,7 @@ export async function handleOptions(options: Partial<FnclipOptions> = {}) {
       indexPath: './index',
       remote: false,
       dir: 'src/utils/fnclip',
-      cwd: '.',
+      cwd,
     },
   )
 }

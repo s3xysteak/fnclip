@@ -23,6 +23,9 @@ describe('fnclip cli', () => {
   it('add', async () => {
     await run('pnpm fnclip add pipe')
     expect(await fs.pathExists(p('src/utils/fnclip'))).toBe(true)
+
+    expect(await fs.readFile(p('src/utils/fnclip/pipe.js'), 'utf8')).toMatchSnapshot()
+    expect(await fs.readFile(p('src/utils/fnclip/index.js'), 'utf8')).toMatchSnapshot()
   })
 
   it('remove', async () => {

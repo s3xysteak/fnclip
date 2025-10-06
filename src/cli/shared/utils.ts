@@ -10,7 +10,7 @@ export async function getMeta() {
   return res
 }
 
-export const exportContent = (f: string) => `export * from './${f}';\n`
+export const exportContent = (f: string) => `export * from './${f}';`
 
 export function ensureExt(fullname: string, ext: string) {
   return path.extname(fullname) ? fullname : `${fullname}${ext}`
@@ -25,10 +25,12 @@ export async function isTypescript(cwd: string) {
   return !!(obj.dependencies?.typescript || obj.devDependencies?.typescript)
 }
 
-export async function updateIndex(opts: FnclipOptions) {
+export async function updateIndex(opts: FnclipOptions, dry = false) {
   if (!opts.index)
     return
 
+  const meta = await getMeta()
+  const metaSet = new Set(Object.keys(meta))
   const dirPath = path.join(opts.cwd, opts.dir)
   const indexPathMaybeExt = path.join(dirPath, opts.indexPath)
 
@@ -45,8 +47,15 @@ export async function updateIndex(opts: FnclipOptions) {
   indexRealPath ??= ensureExt(indexPathMaybeExt, (opts.ts ? '.ts' : '.js'))
   await fs.ensureFile(indexRealPath)
 
-  const funcs = await fs.readdir(dirPath)
-  await fs.writeFile(indexRealPath, addIgnoreToContent(funcs.map(exportContent).join('')))
+  const funcs = [...new Set(
+    (await fs.readdir(dirPath)).map(name => name.replace(/\.(?:js|ts|d\.ts)$/, '')),
+  )]
+  dry || await fs.writeFile(indexRealPath, addIgnoreToContent(
+    funcs
+      .filter(func => metaSet.has(func))
+      .map(exportContent)
+      .join('\n'),
+  ))
 }
 
 export function addIgnoreToContent(content: string) {

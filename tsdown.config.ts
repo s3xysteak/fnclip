@@ -15,11 +15,12 @@ export default defineConfig(async () => {
     copy: [
       ...files.map(path => ({ from: path, to: path.replace('src', 'dist') })),
       ...configFiles.map(path => ({ from: path, to: path.replace('src', 'dist') })),
-      'funcs-meta.json',
+      'src/funcs-meta.json',
     ],
     publint: true,
     hooks: {
       'build:prepare': () => updateFuncsMeta(),
     },
+    ignoreWatch: /funcs-meta\.json$/,
   }
 })
