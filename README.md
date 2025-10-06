@@ -50,7 +50,7 @@ npx fnclip add pipe
 
 ### change target path
 
-Add a function to `packages/other/fnclip/pipe.ts`.
+Add a function to `packages/other/fnclip/pipe.ts`. For comparison, your package.json maybe in `packages/other/package.json`
 
 Add or update index like above.
 
@@ -58,13 +58,23 @@ Add or update index like above.
 npx fnclip add pipe --cwd packages/other --dir fnclip
 ```
 
-### if you do not want `index`
+### About `index` file
 
 This will prevent adding/updating index file.
 
 ```sh
 npx fnclip add pipe --no-index
 ```
+
+Or specify a path of index file
+
+```sh
+npx fnclip add pipe --index-path ../fnclip.js
+```
+
+It will specify index path in `src/utils/fnclip.js` instead of `src/utils/fnclip/index.js`
+
+You can also omit extension and it will automatically add it for you `--index-path ../fnclip`
 
 ### typescript or javascript
 
@@ -85,7 +95,19 @@ npx fnclip add objectKeys objectMap nonNullable
 
 ### Pre configuration (✨Recommend!)
 
-Just prepare for it in `package.json/scripts`.
+You can use `npx fnclip config` to add a config file to your project:
+
+`<root>/fnclip.config.js`
+
+It looks like:
+
+```js
+export default defineConfig({})
+```
+
+The option can also be a function/async function. It supports all options which cli provided.
+
+Or just prepare for it in `package.json/scripts`.
 
 ```json
 {
