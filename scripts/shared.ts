@@ -4,7 +4,7 @@ import { glob } from 'tinyglobby'
 export async function updateFuncsMeta(files?: string[]) {
   await fs.writeFile(
     'src/funcs-meta.json',
-    JSON.stringify(
+    `${JSON.stringify(
       Object.fromEntries(
         (files ?? await glob([
           'src/functions/*/*/index.ts',
@@ -18,6 +18,6 @@ export async function updateFuncsMeta(files?: string[]) {
       ),
       null,
       2,
-    ),
+    )}\n`,
   )
 }

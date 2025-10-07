@@ -11,12 +11,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "fnclip": "link:../.."
+  },
   "pnpm": {
     "overrides": {
       "fnclip": "link:../.."
     }
-  },
-  "dependencies": {
-    "fnclip": "link:../.."
   }
 }
