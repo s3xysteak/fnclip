@@ -1,14 +1,10 @@
 <h1 align="center">fnclip</h1>
 
 <p align="center">
-Use functions only what you want.
+Use only the functions you need.
 </p>
 
-> 🔨 Still WIP bro plz do not use it.
-
-Just like many other tool libraries, but **you can use only the functions you need** through the clipboard or CLI.
-
-Sometimes I just want maybe one tool function, but I had to install a whole library. When I tried to just copy what I want, I found a lots of complex dependencies... Which is so annoying. Thus this library was born.
+`fnclip` lets you copy and use only the functions you need, without installing entire libraries or worrying about dependencies.
 
 ## QUICK START!
 
@@ -16,13 +12,13 @@ Sometimes I just want maybe one tool function, but I had to install a whole libr
 npx fnclip add pipe
 ```
 
-This will add `pipe` function to your `src/utils/fnclip/pipe.js`, add generate `src/utils/fnclip/index.js` to export it.
+This will add the `pipe` function to `src/utils/fnclip/pipe.ts` (or `.js` and `.d.ts`) and update `src/utils/fnclip/index.ts` to export it.
 
 ## ✨ Features
 
 1. Each single file under `src/functions/` represents an independent function without any dependencies, you can copy and use it directly!
-2. And also there is a **z** for your convenience, check below.
-3. Both support js/ts. It will automatically find out what you are using, but you can still indicate it manually. For js, it will provide `d.ts`.
+2. Provide a convenient cli for quick access (see below).
+3. Automatically detects whether you are using JavaScript or TypeScript, but you can specify manually if needed.
 4. The cli only support nodejs currently. But you can still just copy the file you want!
 
 ## 🚀 Usage
@@ -36,23 +32,25 @@ npx fnclip -h
 npx fnclip add -h
 ```
 
-### basic
-
-Add a function to `src/utils/fnclip/pipe.ts`.
-
-Add or update `src/utils/fnclip/index.ts` like `export * from './xxx.ts'`.
+### Adding functions
 
 ```sh
 npx fnclip add pipe
 ```
 
-(Or use alias `add|i|install`)
+This will add `pipe` to `src/utils/fnclip/pipe.ts`, and automatically add or update `src/utils/fnclip/index.ts` which contains `export * from './pipe.ts'`.
 
-### change target path
+You can also use the following aliases: `add`, `i`, `install`.
 
-Add a function to `packages/other/fnclip/pipe.ts`. For comparison, your package.json maybe in `packages/other/package.json`
+```sh
+npx fnclip i objectKeys objectMap nonNullable
+```
 
-Add or update index like above.
+This will add multiple functions to your project, which may be useful when you start a new project.
+
+### Changing target path
+
+Add a function to a custom directory, for example:
 
 ```sh
 npx fnclip add pipe --cwd packages/other --dir fnclip
@@ -85,15 +83,7 @@ npx fnclip add pipe --ts
 npx fnclip add pipe --no-ts
 ```
 
-### add a lot of functions at once
-
-Mostly use it while starting a new project.
-
-```sh
-npx fnclip add objectKeys objectMap nonNullable
-```
-
-### Pre configuration (✨Recommend!)
+### Recommend pre-configuration
 
 You can use `npx fnclip config` to add a config file to your project:
 
@@ -118,15 +108,11 @@ Or just prepare for it in `package.json/scripts`.
 }
 ```
 
-To use it:
-
-```sh
-npm fnclip:add pipe # add pipe function
-```
+Now you can run `npm fnclip:add pipe` to add functions easily.
 
 ### ... and more!
 
-Please refer to `--help`
+Please refer to `npx fnclip --help` `npx fnclip <command> --help`
 
 ```sh
 npx fnclip add pipe
