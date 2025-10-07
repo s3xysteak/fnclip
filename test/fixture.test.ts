@@ -8,13 +8,6 @@ const p = (path: string) => join(fileURLToPath(new URL('.', import.meta.url)), '
 const cwd = './test/fixture'
 
 describe('fnclip cli', () => {
-  it('config', async () => {
-    await run('pnpm fnclip config --cwd ./src')
-    expect(await fs.pathExists(p('./src/fnclip.config.js'))).toBe(true)
-
-    await fs.remove(p('./src/fnclip.config.js'))
-  })
-
   it('clear', async () => {
     await run(`pnpm fnclip clear`)
     expect(await fs.pathExists(p('src/utils/fnclip'))).toBe(false)
@@ -28,6 +21,45 @@ describe('fnclip cli', () => {
     expect(await fs.readFile(p('src/utils/fnclip/index.js'), 'utf8')).toMatchSnapshot()
   })
 
+  it('config', async () => {
+    const configPath = p('./fnclip.config.js')
+
+    const prepare = () => {
+      let content = ''
+
+      return {
+        save: async () => {
+          content = await fs.readFile(configPath, 'utf8')
+        },
+        load: async () => {
+          await fs.ensureFile(configPath)
+          await fs.writeFile(configPath, content)
+        },
+      }
+    }
+    const preparedConfig = prepare()
+    await preparedConfig.save()
+
+    await fs.remove(configPath)
+    await run('pnpm fnclip config')
+
+    expect(await fs.pathExists(configPath)).toBe(true)
+
+    const content = await fs.readFile(configPath, 'utf8')
+    await fs.writeFile(configPath, content.replace('defineConfig({})', `defineConfig({ dir: 'src/test', ts: true })`))
+
+    await run('pnpm fnclip add pipe')
+    expect(await fs.pathExists(p('src/test/pipe.ts'))).toBe(true)
+    await fs.remove(p('src/test'))
+
+    await run('pnpm fnclip add pipe --no-ts')
+    expect(await fs.pathExists(p('src/test/pipe.js'))).toBe(true)
+    await fs.remove(p('src/test'))
+
+    await fs.remove(configPath)
+    await preparedConfig.load()
+  })
+
   it('remove', async () => {
     await run('pnpm fnclip add isPromise')
     expect(await fs.pathExists(p('src/utils/fnclip/isPromise.js'))).toBe(true)
@@ -39,7 +71,7 @@ describe('fnclip cli', () => {
   })
 
   it('index-path', async () => {
-    await run('pnpm fnclip add isPromise --index-path ../fnclip')
+    await run('pnpm fnclip add isPromise --index-path ../fnclip.js')
     expect(await fs.pathExists(p('src/utils/fnclip.js'))).toBe(true)
     expect(await fs.readFile(p('src/utils/fnclip.js'), 'utf8')).toContain(`export * from './isPromise';`)
 
