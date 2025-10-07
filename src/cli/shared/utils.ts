@@ -10,8 +10,6 @@ export async function getMeta() {
   return res
 }
 
-export const exportContent = (f: string) => `export * from './${f}';`
-
 export function ensureExt(fullname: string, ext: string) {
   return path.extname(fullname) ? fullname : `${fullname}${ext}`
 }
@@ -25,6 +23,7 @@ export async function isTypescript(cwd: string) {
   return !!(obj.dependencies?.typescript || obj.devDependencies?.typescript)
 }
 
+const exportContent = (to: string) => `export * from '${to}';`
 export async function updateIndex(opts: FnclipOptions, dry = false) {
   if (!opts.index)
     return
@@ -53,7 +52,10 @@ export async function updateIndex(opts: FnclipOptions, dry = false) {
   dry || await fs.writeFile(indexRealPath, addIgnoreToContent(
     funcs
       .filter(func => metaSet.has(func))
-      .map(exportContent)
+      .map(name => exportContent(relativeImportPath(
+        path.dirname(indexRealPath),
+        path.join(dirPath, name),
+      )))
       .join('\n'),
   ))
 }
@@ -65,4 +67,9 @@ export function addIgnoreToContent(content: string) {
 
 `
   return content.includes(comments) ? content : comments + content
+}
+
+export function relativeImportPath(from: string, to: string) {
+  const rel = path.relative(from, to)
+  return rel.startsWith('.') ? rel : `./${rel}`
 }
