@@ -2,14 +2,19 @@
   "config": "functions/config/config/fnclip.config",
   "createMeta": "functions/object/createMeta/index",
   "createPromiseQueue": "functions/promise/createPromiseQueue/index",
+  "flow": "functions/function/flow/index",
   "get": "functions/object/get/index",
+  "groupBy": "functions/object/groupBy/index",
   "isInRange": "functions/number/isInRange/index",
-  "isPromise": "functions/other/isPromise/index",
+  "isPromise": "functions/guard/isPromise/index",
   "makeDestructurable": "functions/other/makeDestructurable/index",
-  "nonNullable": "functions/other/nonNullable/index",
+  "nonNullable": "functions/guard/nonNullable/index",
   "objectEntries": "functions/object/objectEntries/index",
   "objectKeys": "functions/object/objectKeys/index",
   "objectMap": "functions/object/objectMap/index",
   "pipe": "functions/function/pipe/index",
-  "randomInt": "functions/number/randomInt/index"
+  "randomInt": "functions/number/randomInt/index",
+  "shuffle": "functions/array/shuffle/index",
+  "toArray": "functions/array/toArray/index",
+  "toPromise": "functions/promise/toPromise/index"
 }
