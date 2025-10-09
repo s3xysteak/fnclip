@@ -5,6 +5,8 @@ import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
 
+export * from './fnclip/index'
+
 export async function getMeta() {
   const res: Record<string, string> = await fs.readJson(path.join(fnclipPath, 'funcs-meta.json'))
   return res
