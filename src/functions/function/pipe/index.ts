@@ -3,7 +3,7 @@
 /**
  * Pipes the value of an expression into a pipeline of functions.
  *
- * ## example
+ * @example
  * ```ts
  * const len = (s: string): number => s.length
  * const double = (n: number): number => n * 2

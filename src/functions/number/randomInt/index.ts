@@ -1,7 +1,7 @@
 /**
  * Closed interval random integer number
  *
- * ## example
+ * @example
  *
  * ```js
  *  // 1 <= value <= 10

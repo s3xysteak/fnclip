@@ -1,5 +1,5 @@
 /**
- * ## example
+ * @example
  *
  * ```js
  * get({ friends: [{ name: 'me' }] }, 'friends[0].name') // -> 'me'

@@ -3,7 +3,7 @@
  *
  * It is useful when you want to add properties to a complex object.
  *
- * ## example
+ * @example
  * ```ts
  * const [set, get] = createMeta<{one: number}>()
  *

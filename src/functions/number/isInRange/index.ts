@@ -1,7 +1,7 @@
 /**
  * Is a number in a range
  *
- * ## example
+ * @example
  *
  * ```js
  * isInRange(5, [1, 10]) // -> true

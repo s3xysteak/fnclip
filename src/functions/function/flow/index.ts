@@ -3,7 +3,7 @@
 /**
  * Performs left-to-right function composition. The first argument may have any arity, the remaining arguments must be unary.
  *
- * ## example
+ * @example
  * ```ts
  * const len = (s: string): number => s.length
  * const double = (n: number): number => n * 2
