@@ -1,8 +1,8 @@
-import type { BaseOptions } from './shared/options'
+import type { BaseOptions } from './options'
 import consola from 'consola'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { handleOptions } from './shared/options'
+import { handleOptions } from './options'
 
 export interface ClearOptions extends BaseOptions {}
 

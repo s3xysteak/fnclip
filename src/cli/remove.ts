@@ -1,10 +1,10 @@
-import type { BaseOptions } from './shared/options'
+import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { handleOptions } from './shared/options'
-import { getMeta, updateIndex } from './shared/utils'
+import { handleOptions } from './options'
+import { getMeta, updateIndex } from '../utils'
 
 export interface RemoveOptions extends BaseOptions { }
 

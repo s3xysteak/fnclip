@@ -1,10 +1,10 @@
-import type { BaseOptions } from './shared/options'
+import type { BaseOptions } from './options'
 
 import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
-import { handleOptions } from './shared/options'
-import { getMeta } from './shared/utils'
+import { handleOptions } from './options'
+import { getMeta } from '../utils'
 
 export interface ConfigOptions extends BaseOptions {
   ts: boolean

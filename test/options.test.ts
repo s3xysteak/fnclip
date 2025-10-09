@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { handleOptions } from '../src/cli/shared/options'
+import { handleOptions } from '../src/cli/options'
 
 describe('options', () => {
   it('handleOptions', async () => {

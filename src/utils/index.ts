@@ -1,9 +1,9 @@
 import type { PackageJson } from 'pkg-types'
-import type { FnclipOptions } from './options'
+import type { FnclipOptions } from '../cli/options'
 import * as pkg from 'empathic/package'
 import fs from 'fs-extra'
 import * as path from 'pathe'
-import { fnclipPath } from '../..'
+import { fnclipPath } from '..'
 
 export async function getMeta() {
   const res: Record<string, string> = await fs.readJson(path.join(fnclipPath, 'funcs-meta.json'))

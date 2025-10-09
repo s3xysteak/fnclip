@@ -1,11 +1,11 @@
-import type { BaseOptions } from './shared/options'
+import type { BaseOptions } from './options'
 import { cyan } from 'ansis'
 import consola from 'consola'
 import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
-import { handleOptions } from './shared/options'
-import { addIgnoreToContent, ensureExt, getMeta, updateIndex } from './shared/utils'
+import { handleOptions } from './options'
+import { addIgnoreToContent, ensureExt, getMeta, updateIndex } from '../utils'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean

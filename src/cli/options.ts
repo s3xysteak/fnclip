@@ -1,4 +1,4 @@
-import type { AddOptions, ClearOptions, ConfigOptions, ListOptions, RemoveOptions } from '../..'
+import type { AddOptions, ClearOptions, ConfigOptions, ListOptions, RemoveOptions } from '..'
 import defu from 'defu'
 import { loadConfig } from 'unconfig'
 
