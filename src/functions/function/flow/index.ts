@@ -1,55 +1,57 @@
 // fp-ts
 
 /**
- * Pipes the value of an expression into a pipeline of functions.
+ * Performs left-to-right function composition. The first argument may have any arity, the remaining arguments must be unary.
  *
  * ## example
  * ```ts
  * const len = (s: string): number => s.length
  * const double = (n: number): number => n * 2
  *
- * // without pipe
- * expect(double(len('aaa'))).toBe(6)
+ * const f = flow(len, double)
  *
- * // with pipe
- * expect(pipe('aaa', len, double)).toBe(6)
+ * expect(f('aaa')).toBe(6)
  * ```
  */
-export function pipe<A>(a: A): A
-export function pipe<A, B>(a: A, ab: (a: A) => B): B
-export function pipe<A, B, C>(a: A, ab: (a: A) => B, bc: (b: B) => C): C
-export function pipe<A, B, C, D>(a: A, ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D): D
-export function pipe<A, B, C, D, E>(a: A, ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D, de: (d: D) => E): E
-export function pipe<A, B, C, D, E, F>(
-  a: A,
-  ab: (a: A) => B,
+export function flow<A extends ReadonlyArray<unknown>, B>(ab: (...a: A) => B): (...a: A) => B
+export function flow<A extends ReadonlyArray<unknown>, B, C>(ab: (...a: A) => B, bc: (b: B) => C): (...a: A) => C
+export function flow<A extends ReadonlyArray<unknown>, B, C, D>(
+  ab: (...a: A) => B,
+  bc: (b: B) => C,
+  cd: (c: C) => D
+): (...a: A) => D
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E>(
+  ab: (...a: A) => B,
+  bc: (b: B) => C,
+  cd: (c: C) => D,
+  de: (d: D) => E
+): (...a: A) => E
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
   ef: (e: E) => F
-): F
-export function pipe<A, B, C, D, E, F, G>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => F
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
   ef: (e: E) => F,
   fg: (f: F) => G
-): G
-export function pipe<A, B, C, D, E, F, G, H>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => G
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
   ef: (e: E) => F,
   fg: (f: F) => G,
   gh: (g: G) => H
-): H
-export function pipe<A, B, C, D, E, F, G, H, I>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => H
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -57,10 +59,9 @@ export function pipe<A, B, C, D, E, F, G, H, I>(
   fg: (f: F) => G,
   gh: (g: G) => H,
   hi: (h: H) => I
-): I
-export function pipe<A, B, C, D, E, F, G, H, I, J>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => I
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -69,10 +70,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J>(
   gh: (g: G) => H,
   hi: (h: H) => I,
   ij: (i: I) => J
-): J
-export function pipe<A, B, C, D, E, F, G, H, I, J, K>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => J
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -82,10 +82,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K>(
   hi: (h: H) => I,
   ij: (i: I) => J,
   jk: (j: J) => K
-): K
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => K
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -96,10 +95,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L>(
   ij: (i: I) => J,
   jk: (j: J) => K,
   kl: (k: K) => L
-): L
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => L
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -111,10 +109,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M>(
   jk: (j: J) => K,
   kl: (k: K) => L,
   lm: (l: L) => M
-): M
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => M
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -127,10 +124,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(
   kl: (k: K) => L,
   lm: (l: L) => M,
   mn: (m: M) => N
-): N
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => N
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -144,11 +140,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
   lm: (l: L) => M,
   mn: (m: M) => N,
   no: (n: N) => O
-): O
-
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => O
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -163,11 +157,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(
   mn: (m: M) => N,
   no: (n: N) => O,
   op: (o: O) => P
-): P
-
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => P
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -183,11 +175,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q>(
   no: (n: N) => O,
   op: (o: O) => P,
   pq: (p: P) => Q
-): Q
-
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => Q
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -204,11 +194,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R>(
   op: (o: O) => P,
   pq: (p: P) => Q,
   qr: (q: Q) => R
-): R
-
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => R
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -226,11 +214,9 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S>(
   pq: (p: P) => Q,
   qr: (q: Q) => R,
   rs: (r: R) => S
-): S
-
-export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>(
-  a: A,
-  ab: (a: A) => B,
+): (...a: A) => S
+export function flow<A extends ReadonlyArray<unknown>, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>(
+  ab: (...a: A) => B,
   bc: (b: B) => C,
   cd: (c: C) => D,
   de: (d: D) => E,
@@ -249,16 +235,10 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>
   qr: (q: Q) => R,
   rs: (r: R) => S,
   st: (s: S) => T
-): T
-export function pipe(
-  a: unknown,
-  ...fns: ((...args: any[]) => any)[]
+): (...a: A) => T
+
+export function flow(
+  ...args: ((...args: any[]) => any)[]
 ): unknown {
-  if (fns.length === 0)
-    return a
-  let ret = a
-  for (const fn of fns) {
-    ret = fn(ret)
-  }
-  return ret
+  return args.reduce((f, g) => (...args: any[]) => g(f(...args)))
 }

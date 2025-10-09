@@ -3,7 +3,18 @@ import { pipe } from '.'
 
 describe('pipe', () => {
   it('should work', () => {
-    const run = pipe((n: number) => n + 1, n => n * n, String)
-    expect(run(1)).toBe('4')
+    expect(pipe(1, n => n + 1, n => n * n, String)).toBe('4')
+  })
+
+  it('1 param', () => {
+    expect(
+      pipe(1, (n: number) => n + 1),
+    ).toBe(2)
+  })
+
+  it('2 params', () => {
+    expect(
+      pipe(1, (n: number) => n + 1, n => n * n),
+    ).toBe(4)
   })
 })

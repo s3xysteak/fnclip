@@ -60,7 +60,6 @@ cli
   })
   .option('--cwd <path>', 'The base path')
   .option('--ts', 'Enable TypeScript mode')
-  .option('-d, --dir <path>', 'The target folder')
   .action(config)
 
 export async function runCLI() {
