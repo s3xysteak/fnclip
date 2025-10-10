@@ -29,35 +29,27 @@
 export function createPromiseQueue() {
   const list: Array<Callable<Promise<any>>>[] = []
 
-  function run<T>(
-    this: CreatePromiseQueueReturns,
-    promise: Callable<Promise<T>>,
-    callback: (value: T) => Awaitable<void>,
-  ): CreatePromiseQueueReturns {
-    const p = typeof promise === 'function' ? promise() : promise
-    const cb = async (v: T) => callback(v)
-    const index = list.push([p, cb]) - 1
+  const api = {
+    run: <T>(promise: Callable<Promise<T>>, callback: (value: T) => Awaitable<void>) => {
+      const p = typeof promise === 'function' ? promise() : promise
+      const cb = async (v: T) => callback(v)
+      const index = list.push([p, cb]) - 1
 
-    p.then(async (v) => {
-      if (index > 0)
-        await Promise.allSettled(list[index - 1])
+      p.then(async (v) => {
+        if (index > 0)
+          await Promise.allSettled(list[index - 1])
 
-      await cb(v)
-    })
+        await cb(v)
+      })
 
-    return this
+      return api
+    },
+    wait: async () => {
+      await Promise.allSettled(list.flat())
+    },
   }
 
-  const wait = async () => {
-    await Promise.allSettled(list.flat())
-  }
-
-  return {
-    run,
-    wait,
-  }
+  return api
 }
-
 type Awaitable<T> = T | PromiseLike<T>
 type Callable<T> = T | ((...args: any[]) => T)
-type CreatePromiseQueueReturns = ReturnType<typeof createPromiseQueue>

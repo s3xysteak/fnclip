@@ -17,8 +17,8 @@
  * createMeta({ one: 1 })
  * ```
  */
-export function createMeta<T = any>(__for_type_infer?: T, metaSymbol: PropertyKey = Symbol('createMeta')) {
-  const set = <Meta = T, Target = any>(target: Target, meta: Meta) =>
+export function createMeta<Meta = any>(__for_type_infer?: Meta, metaSymbol: PropertyKey = Symbol('createMeta')) {
+  const set = <Target = any>(target: Target, meta: Meta) =>
     Object.defineProperty(target, metaSymbol, {
       value: meta,
       writable: true,
@@ -26,7 +26,7 @@ export function createMeta<T = any>(__for_type_infer?: T, metaSymbol: PropertyKe
       configurable: true,
     })
 
-  const get = <Meta = T>(target: any) => target?.[metaSymbol] as Meta | undefined
+  const get = (target: any) => target?.[metaSymbol] as Meta | undefined
 
   return [set, get] as const
 }
