@@ -17,16 +17,28 @@
  * createMeta({ one: 1 })
  * ```
  */
-export function createMeta<Meta = any>(__for_type_infer?: Meta, metaSymbol: PropertyKey = Symbol('createMeta')) {
-  const set = <Target = any>(target: Target, meta: Meta) =>
-    Object.defineProperty(target, metaSymbol, {
-      value: meta,
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    })
+export function createMeta<Meta = any>(__for_type_infer?: Meta, META_KEY: PropertyKey = Symbol('createMeta')) {
+  const getEntry = (target: any): { value?: any } => target?.[META_KEY]
 
-  const get = (target: any) => target?.[metaSymbol] as Meta | undefined
+  const set = (target: any, meta: Meta) => {
+    const entry = getEntry(target)
+    if (!entry) {
+      Object.defineProperty(target, META_KEY, {
+        value: { value: meta },
+        writable: true,
+        enumerable: true,
+        configurable: true,
+      })
+    }
+    else {
+      entry.value = meta
+    }
+  }
+
+  const get = (target: any) => {
+    const entry = getEntry(target)
+    return entry?.value as Meta | undefined
+  }
 
   return [set, get] as const
 }
