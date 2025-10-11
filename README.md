@@ -74,7 +74,7 @@ It will specify index path in `src/utils/fnclip.js` instead of `src/utils/fnclip
 
 You can also omit extension and it will automatically add it for you `--index-path ../fnclip`
 
-### typescript or javascript
+### Typescript or Javascript
 
 By default it will automatically choose ts or js. Or you can manually specify it:
 
@@ -83,7 +83,7 @@ npx fnclip add pipe --ts
 npx fnclip add pipe --no-ts
 ```
 
-### Recommend pre-configuration
+### Pre-configuration
 
 You can use `npx fnclip config` to add a config file to your project:
 

@@ -3,3 +3,4 @@
 // @ts-nocheck
 
 export * from './groupBy';
+export * from './objectEntries';

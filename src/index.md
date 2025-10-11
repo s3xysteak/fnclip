@@ -5,21 +5,20 @@ layout: home
 hero:
   name: "fnclip"
   text: "Use only the functions you need."
-  tagline: My great project tagline
+  tagline: "With out-of-the-box CLI."
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Introduction
+      link: /introduction
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Quick start
+      link: /quick-start
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 🧩 Standalone
+    details: Each file under `src/functions/` is an independent utility you can copy and use directly.
+  - title: ⚡ CLI Access
+    details: Use the built-in command-line tool for quick access and execution.
+  - title: 🧠 Auto Detect
+    details: Automatically detects JS or TS, with optional manual override.
 ---
-

@@ -27,7 +27,7 @@
  * ```
  */
 export function createPromiseQueue() {
-  const list: Array<Callable<Promise<any>>>[] = []
+  const list: [Promise<any>, (...args: any[]) => Promise<any>][] = []
 
   const api = {
     run: <T>(promise: Callable<Promise<T>>, callback: (value: T) => Awaitable<void>) => {
