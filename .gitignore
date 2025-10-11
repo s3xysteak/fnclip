@@ -1,5 +1,6 @@
 src/.vitepress/dist
 src/.vitepress/cache
+tsc-types
 
 .cache
 .DS_Store

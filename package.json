@@ -33,6 +33,7 @@
   "scripts": {
     "dev": "tsdown --watch src",
     "build": "tsdown",
+    "build:types": "tsc -p tsconfig.build.json",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "release": "pnpm prepare && pnpm test:once && pnpm typecheck && bumpp",
@@ -41,7 +42,7 @@
     "typecheck": "tsc --noEmit",
     "prepare": "esno scripts/update-funcs-meta.ts",
     "docs:dev": "vitepress dev src",
-    "docs:build": "vitepress build src",
+    "docs:build": "pnpm build:types && vitepress build src",
     "docs:preview": "vitepress preview src"
   },
   "dependencies": {

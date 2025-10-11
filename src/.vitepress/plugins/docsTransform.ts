@@ -12,29 +12,34 @@ export default function (): Plugin {
       if (!isFunctionsMarkdown(id))
         return
 
-      const [_type, name] = id.replace(/.*\/src\/functions\//, '').split('/')
+      const [type, name] = id.replace(/.*\/src\/functions\//, '').split('/')
 
-      const demoPath = `src/functions/${_type}/${name}/demo.vue`
+      const demoPath = `src/functions/${type}/${name}/demo.vue`
       const demoCode = await fs.pathExists(demoPath)
         ? await fs.readFile(demoPath, 'utf-8')
         : null
 
+      const typePath = `tsc-types/${type}/${name}/index.d.ts`
+      const typeContent = await fs.readFile(typePath, 'utf-8')
+
       const result = createCodeChain(code)
-        .prepend(`# ${name}\n`)
+        .prepend(`# ${name}`)
         .when(
           !!demoCode,
           code => code
-            .append(`## demo\n`)
-            .append(`\`\`\`vue\n${demoCode}\n\`\`\`\n`)
+            .append(`## Demo`)
+            .append(`\`\`\`vue\n${demoCode}\n\`\`\``)
             .append(`---`)
             .script()
-            .append(`import { defineAsyncComponent } from 'vue'\n`)
-            .append(`const Comp = defineAsyncComponent(() => import('./demo.vue'))\n`)
+            .append(`import { defineAsyncComponent } from 'vue'`)
+            .append(`const Comp = defineAsyncComponent(() => import('./demo.vue'))`)
             .back()
             .append('<Suspense>')
             .append(`<Comp />`)
-            .append(`</Suspense>`),
+            .append(`</Suspense>\n`),
         )
+        .append(`## Type Declarations`)
+        .append(`\`\`\`ts\n${typeContent}\n\`\`\``)
         .toString()
 
       return result
@@ -82,11 +87,11 @@ function createCodeChain(_code: string) {
 
   const api: Api = {
     prepend: (content: string) => {
-      code = `${content}${code}`
+      code = `${content}\n${code}`
       return api
     },
     append: (content: string) => {
-      code = `${code}${content}`
+      code = `${code}${content}\n`
       return api
     },
     replace: (search: string | RegExp, replacement: string) => {
