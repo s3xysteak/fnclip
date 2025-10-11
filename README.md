@@ -4,6 +4,12 @@
 Use only the functions you need.
 </p>
 
+<br>
+<p align="center">
+<a href="https://s3xysteak.github.io/fnclip/">📚 Documentation</a>
+</p>
+<br>
+
 `fnclip` lets you copy and use only the functions you need, without installing entire libraries or worrying about dependencies.
 
 ## QUICK START!
