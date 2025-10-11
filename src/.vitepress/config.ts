@@ -21,13 +21,14 @@ export default async () => {
     text: type,
     items: (items ?? [])?.map(({ name }) => ({
       text: name,
-      link: `/functions/${type}/${name}`,
+      link: `/functions/${type}/${name}/`,
     })).sort((a, b) => a.text.localeCompare(b.text)),
   }))
 
   return defineConfig({
     title: 'fnclip',
     description: 'Use only the functions you need.',
+    base: '/fnclip/',
     themeConfig: {
       nav: [
         { text: 'Home', link: '/' },
