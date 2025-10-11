@@ -4,6 +4,8 @@ import { createPromiseQueue } from '.'
 const val = ref('')
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 async function update() {
+  val.value = ''
+
   const queue = createPromiseQueue()
   queue
     .run(() => sleep(1), () => { val.value += '1 done!' })

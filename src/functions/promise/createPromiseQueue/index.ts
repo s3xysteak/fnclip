@@ -27,25 +27,24 @@
  * ```
  */
 export function createPromiseQueue() {
-  const list: [Promise<any>, (...args: any[]) => Promise<any>][] = []
+  const queue: {
+    taskP: Callable<Promise<any>>
+    callback?: (value: any) => Awaitable<any>
+  }[] = []
+  let lastCallback = Promise.resolve()
 
   const api = {
-    run: <T>(promise: Callable<Promise<T>>, callback: (value: T) => Awaitable<void>) => {
-      const p = typeof promise === 'function' ? promise() : promise
-      const cb = async (v: T) => callback(v)
-      const index = list.push([p, cb]) - 1
-
-      p.then(async (v) => {
-        if (index > 0)
-          await Promise.allSettled(list[index - 1])
-
-        await cb(v)
-      })
-
+    run: <T>(task: Callable<Promise<T>>, callback?: (value: T) => Awaitable<any>) => {
+      const taskP = typeof task === 'function' ? task() : task
+      if (callback) {
+        lastCallback = lastCallback.then(() => taskP.then(callback))
+      }
+      queue.push({ taskP, callback })
       return api
     },
     wait: async () => {
-      await Promise.allSettled(list.flat())
+      await Promise.all(queue.map(i => i.taskP))
+      await lastCallback
     },
   }
 
