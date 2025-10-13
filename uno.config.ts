@@ -13,6 +13,7 @@ export default defineConfig({
       'shadow-md',
       'hover:(shadow-lg translate-y--0.5)',
       'active:(shadow-sm translate-y-0)',
+      'dark:(b-(1 solid white/10) shadow-gray/10)',
     ],
   },
   presets: [
