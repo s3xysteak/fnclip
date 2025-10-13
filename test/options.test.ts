@@ -9,7 +9,7 @@ describe('options', () => {
         "cwd": ".",
         "dir": "src/utils/fnclip",
         "index": true,
-        "indexPath": "./index",
+        "indexPath": "src/utils/fnclip/index",
         "remote": false,
         "ts": true,
       }

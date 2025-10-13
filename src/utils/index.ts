@@ -33,7 +33,7 @@ export async function updateIndex(opts: FnclipOptions, dry = false) {
   const meta = await getMeta()
   const metaSet = new Set(Object.keys(meta))
   const dirPath = path.join(opts.cwd, opts.dir)
-  const indexPathMaybeExt = path.join(dirPath, opts.indexPath)
+  const indexPathMaybeExt = path.join(opts.cwd, opts.indexPath)
 
   // check exist index file
   let indexRealPath: string

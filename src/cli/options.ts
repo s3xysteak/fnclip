@@ -40,7 +40,7 @@ export async function handleOptions(options: Partial<FnclipOptions> = {}) {
     // default options
     <FnclipOptions>{
       index: true,
-      indexPath: './index',
+      indexPath: 'src/utils/fnclip/index',
       remote: false,
       dir: 'src/utils/fnclip',
       cwd,

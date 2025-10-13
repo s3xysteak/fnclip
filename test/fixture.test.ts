@@ -71,7 +71,7 @@ describe('fnclip cli', () => {
   })
 
   it('index-path', async () => {
-    await run('pnpm fnclip add isPromise --index-path ../fnclip.js')
+    await run('pnpm fnclip add isPromise --index-path src/utils/fnclip.js')
     expect(await fs.pathExists(p('src/utils/fnclip.js'))).toBe(true)
     expect(await fs.readFile(p('src/utils/fnclip.js'), 'utf8')).toContain(`export * from './fnclip/isPromise';`)
 
