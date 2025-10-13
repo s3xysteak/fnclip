@@ -4,8 +4,8 @@ import consola from 'consola'
 import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
-import { handleOptions } from './options'
 import { addIgnoreToContent, ensureExt, getMeta, updateIndex } from '../utils'
+import { handleOptions } from './options'
 
 export interface AddOptions extends BaseOptions {
   ts: boolean

@@ -3,8 +3,8 @@ import type { BaseOptions } from './options'
 import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
-import { handleOptions } from './options'
 import { getMeta } from '../utils'
+import { handleOptions } from './options'
 
 export interface ConfigOptions extends BaseOptions {
   ts: boolean

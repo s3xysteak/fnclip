@@ -3,8 +3,8 @@ import { cyan } from 'ansis'
 import consola from 'consola'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { handleOptions } from './options'
 import { getMeta, updateIndex } from '../utils'
+import { handleOptions } from './options'
 
 export interface RemoveOptions extends BaseOptions { }
 
