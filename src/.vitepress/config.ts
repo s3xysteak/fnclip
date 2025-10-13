@@ -36,6 +36,17 @@ export default async () => {
       ],
       search: {
         provider: 'local',
+        options: {
+          detailedView: true,
+          _render(src, env, md) {
+            const html = md.render(src, env)
+            const [prefix, _type, funcName] = env.relativePath.split('/')
+            if (prefix !== 'functions')
+              return html
+
+            return md.render(`# ${funcName}`) + html
+          },
+        },
       },
       sidebar: [
         { text: 'Introduction', link: '/introduction' },
