@@ -1,0 +1,97 @@
+A utility function to simplify the creation of Vue `provide` / `inject` pairs. It internally maintains a symbol as the injection key and exposes composables using provide/inject externally.
+
+It receives a function, which has the same param as the provider, and the same return as the provider and injector.
+
+```ts
+// Typically within the common /composables/ or /utils/ directory.
+
+// basically
+export const [useCountProvider, useCount] = createProvider(() => {
+  const count = ref(0)
+  return count
+})
+// useCountProvider()
+
+// receive params from provider
+createProvider((initial: number) => {
+  return ref(initial)
+})
+// useCountProvider(0)
+```
+
+In father component:
+
+```ts
+// basically
+// It is using `provide` inside so you should use it in setup context
+useCountProvider()
+
+// return value
+const count = useCountProvider()
+```
+
+In child component:
+
+```ts
+// It is using `inject` inside so you should use it in setup context
+const count = useCount()
+watchEffect(() => console.log(count.value))
+```
+
+Complex usage:
+
+```ts
+export const [useTestProvider] = createProvider(() => {
+  // this function will be called in provider function, so you can use composables inside.
+  const { x, y } = useMouse()
+
+  // you can return a object, map, set...anything you want.
+  return {
+    x,
+    y,
+    fixed: computed(() => `left: ${x}px; top: ${y}px;`)
+  }
+})
+
+// father component
+
+const { x } = useTestProvider()
+```
+
+You can also customize inject function. You should rarely use it; it's typically employed only when you need to process the inject function. For data processing similar to the example, the handling should be completed within the first parameter.
+
+```ts
+createProvider(() => ref(0), (key) => {
+  const result = inject(key)
+  return result === 0 ? 'no value!' : 'has value!'
+})
+```
+
+## For the demo below
+
+```ts
+// demo.ts
+
+export const [useCountProvider, useCount] = createProvider((initial = 0) => {
+  return ref(initial)
+})
+```
+
+```vue
+<script setup lang="ts">
+// DemoChild.vue
+import { useCount } from './demo'
+
+const count = useCount()
+</script>
+
+<template>
+  <div>
+    <button btn @click="count++">
+      count plus!
+    </button>
+  </div>
+</template>
+```
+
+About `demo.vue` please check below chapter.

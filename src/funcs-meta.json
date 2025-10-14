@@ -2,6 +2,7 @@
   "config": "functions/config/config/fnclip.config",
   "createMeta": "functions/object/createMeta/index",
   "createPromiseQueue": "functions/promise/createPromiseQueue/index",
+  "createProvider": "functions/vue/createProvider/index",
   "flow": "functions/function/flow/index",
   "get": "functions/object/get/index",
   "groupBy": "functions/object/groupBy/index",
