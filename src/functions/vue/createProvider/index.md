@@ -1,22 +1,22 @@
 A utility function to simplify the creation of Vue `provide` / `inject` pairs. It internally maintains a symbol as the injection key and exposes composables using provide/inject externally.
 
-It receives a function, which has the same param as the provider, and the same return as the provider and injector.
+`const [provider, injector] = createProvider(setup)`
+
+It returns two composables. The first one is the provider which is for the father component, and the other one is injector. These functions return their values as-is without performing any additional processing.
+
+It receives a setup function, which has the same param as the provider, and the same return as the provider and injector. This function will be called in provider.
 
 ```ts
-// Typically within the common /composables/ or /utils/ directory.
-
 // basically
 export const [useCountProvider, useCount] = createProvider(() => {
   const count = ref(0)
   return count
 })
-// useCountProvider()
 
 // receive params from provider
 createProvider((initial: number) => {
   return ref(initial)
 })
-// useCountProvider(0)
 ```
 
 In father component:
@@ -26,8 +26,8 @@ In father component:
 // It is using `provide` inside so you should use it in setup context
 useCountProvider()
 
-// return value
-const count = useCountProvider()
+// return value, and pass params
+const count = useCountProvider(0)
 ```
 
 In child component:
@@ -54,11 +54,10 @@ export const [useTestProvider] = createProvider(() => {
 })
 
 // father component
-
 const { x } = useTestProvider()
 ```
 
-You can also customize inject function. You should rarely use it; it's typically employed only when you need to process the inject function. For data processing similar to the example, the handling should be completed within the first parameter.
+You can also customize inject function. You should rarely use it; it's typically employed only when you need to process the inject function. For data processing similar to the example, the handling should be completed within the setup function.
 
 ```ts
 createProvider(() => ref(0), (key) => {
@@ -71,9 +70,14 @@ createProvider(() => ref(0), (key) => {
 
 ```ts
 // demo.ts
-
 export const [useCountProvider, useCount] = createProvider((initial = 0) => {
-  return ref(initial)
+  const count = ref(initial)
+
+  return {
+    count,
+    doubleCount: computed(() => count.value * 2),
+    increment: () => { count.value++ },
+  }
 })
 ```
 
@@ -82,13 +86,13 @@ export const [useCountProvider, useCount] = createProvider((initial = 0) => {
 // DemoChild.vue
 import { useCount } from './demo'
 
-const count = useCount()
+const { increment, count } = useCount()
 </script>
 
 <template>
   <div>
-    <button btn @click="count++">
-      count plus!
+    <button btn @click="increment()">
+      Increment {{ count }}
     </button>
   </div>
 </template>

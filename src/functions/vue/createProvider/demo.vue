@@ -2,12 +2,12 @@
 import { useCountProvider } from './demo'
 import DemoChild from './DemoChild.vue'
 
-const count = useCountProvider(10)
+const { doubleCount } = useCountProvider(10)
 </script>
 
 <template>
   <div>
-    <p>father count: {{ count }}</p>
+    <p>father double count: {{ doubleCount }}</p>
     <DemoChild />
   </div>
 </template>

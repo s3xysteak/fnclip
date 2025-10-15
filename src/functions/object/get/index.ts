@@ -3,7 +3,7 @@
  *
  * ```js
  * get({ friends: [{ name: 'me' }] }, 'friends[0].name') // -> 'me'
- * get([{hello: 'world'}], '[0].hello') // -> 'world
+ * get([{hello: 'world'}], '[0].hello') // -> 'world'
  * ```
  *
  * @see {@link https://s3xysteak.github.io/fnclip/functions/object/get/}

@@ -9,5 +9,9 @@ const filtered = raw.filter(nonNullable)
   <div>
     <p>{{ raw }}</p>
     <p>{{ filtered }}</p>
+
+    <p>{{ nonNullable(0) }}</p>
+    <p>{{ nonNullable(null) }}</p>
+    <p>{{ nonNullable(undefined) }}</p>
   </div>
 </template>
