@@ -11,6 +11,8 @@
  * expect(await toPromise(() => 1)).toBe(1)
  * expect(await toPromise(async () => 1)).toBe(1)
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/promise/toPromise/}
  */
 export function toPromise<T>(param: (T | PromiseLike<T>) | ((...args: any[]) => T | PromiseLike<T>)): Promise<T> {
   const cb = async () =>

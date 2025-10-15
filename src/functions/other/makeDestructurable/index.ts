@@ -1,4 +1,8 @@
-/* @__NO_SIDE_EFFECTS__ */
+/**
+ * @__NO_SIDE_EFFECTS__
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/other/makeDestructurable/}
+ */
 export function makeDestructurable<
   T extends Record<string, unknown>,
   A extends readonly any[],

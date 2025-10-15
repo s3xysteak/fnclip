@@ -14,6 +14,8 @@
  * // with pipe
  * expect(pipe('aaa', len, double)).toBe(6)
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/function/pipe/}
  */
 export function pipe<A>(a: A): A
 export function pipe<A, B>(a: A, ab: (a: A) => B): B

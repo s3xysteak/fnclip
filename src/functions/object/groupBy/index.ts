@@ -47,6 +47,8 @@
  *   },
  * )
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/object/groupBy/}
  */
 export function groupBy<K extends PropertyKey, T>(iter: Iterable<T>, getKey: (element: T, index: number) => K) {
   const val: Partial<Record<K, T[]>> = {}

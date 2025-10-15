@@ -43,7 +43,9 @@
     "prepare": "esno scripts/update-funcs-meta.ts",
     "docs:dev": "vitepress dev src",
     "docs:build": "pnpm build:types && vitepress build src",
-    "docs:preview": "vitepress preview src"
+    "docs:preview": "vitepress preview src",
+
+    "update-doc-url": "esno scripts/update-doc-url.ts"
   },
   "dependencies": {
     "ansis": "^4.2.0",

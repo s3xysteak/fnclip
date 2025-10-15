@@ -12,6 +12,8 @@
  *
  * expect(f('aaa')).toBe(6)
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/function/flow/}
  */
 export function flow<A extends ReadonlyArray<unknown>, B>(ab: (...a: A) => B): (...a: A) => B
 export function flow<A extends ReadonlyArray<unknown>, B, C>(ab: (...a: A) => B, bc: (b: B) => C): (...a: A) => C

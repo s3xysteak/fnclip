@@ -16,6 +16,8 @@
  * // createMeta<{ one: number }>()
  * createMeta({ one: 1 })
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/object/createMeta/}
  */
 export function createMeta<Meta = any>(__for_type_infer?: Meta, META_KEY: PropertyKey = Symbol('createMeta')) {
   const getEntry = (target: any): { value?: any } => target?.[META_KEY]

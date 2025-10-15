@@ -23,6 +23,8 @@
  * objectMap({ a: 1, b: 2 }, (k, v) => k === 'a' ? undefined : [k, v])
  * // { b: 2 }
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/object/objectMap/}
  */
 export function objectMap<K extends string, V, NK extends PropertyKey = K, NV = V>(
   obj: Record<K, V>,

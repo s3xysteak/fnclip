@@ -21,6 +21,8 @@ import { inject, provide } from 'vue'
  * // in child component
  * const count = useCount()
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/vue/createProvider/}
  */
 export function createProvider<Fn extends (...args: any[]) => any, ProviderR = ReturnType<Fn>, InjectR = ProviderR>(
   onProvider: Fn,

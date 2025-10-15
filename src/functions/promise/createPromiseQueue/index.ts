@@ -25,6 +25,8 @@
  * await queue2.wait()
  * // log `3` on 30ms, log `2` on next tick, log `10` on 100ms
  * ```
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/promise/createPromiseQueue/}
  */
 export function createPromiseQueue() {
   const queue: {

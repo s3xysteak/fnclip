@@ -23,6 +23,8 @@
  * so the rate is still uniform distribution.
  *
  * 4. plus low -> [low, high]
+ *
+ * @see {@link https://s3xysteak.github.io/fnclip/functions/number/randomInt/}
  */
 export function randomInt(min: number, max: number, rand = Math.random): number {
   if (min > max) {
