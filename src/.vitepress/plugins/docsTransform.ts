@@ -18,14 +18,23 @@ export default function (): Plugin {
       const demoCode = await fs.pathExists(demoPath)
         ? await fs.readFile(demoPath, 'utf-8')
         : null
+      const hasDemo = !!demoCode
 
       const typePath = `tsc-types/${type}/${name}/index.d.ts`
       const typeContent = await fs.readFile(typePath, 'utf-8')
 
+      const links = [
+        ['Source', `https://github.com/s3xysteak/fnclip/blob/main/src/functions/${type}/${name}/index.ts`],
+        hasDemo ? ['Demo', `https://github.com/s3xysteak/fnclip/blob/main/src/functions/${type}/${name}/demo.vue`] : null,
+      ]
+        .filter(i => !!i)
+        .map(([name, url]) => `[${name}](${url})`)
+        .join(' • ')
+
       const result = createCodeChain(code)
         .prepend(`# ${name}`)
         .when(
-          !!demoCode,
+          hasDemo,
           code => code
             .append(`## Demo`)
             .append(`\`\`\`vue\n${demoCode}\n\`\`\``)
@@ -39,7 +48,17 @@ export default function (): Plugin {
             .append(`</Suspense>\n`),
         )
         .append(`## Type Declarations`)
-        .append(`\`\`\`ts\n${typeContent}\n\`\`\``)
+        .append(`
+<details>
+<summary>Show Type Declarations</summary>
+
+\`\`\`ts
+${typeContent}
+\`\`\`
+</details>
+`)
+        .append(`## Source`)
+        .append(links)
         .toString()
 
       return result
