@@ -49,13 +49,13 @@ export default function (): Plugin {
         )
         .append(`## Type Declarations`)
         .append(`
-<details>
-<summary>Show Type Declarations</summary>
+::: details
 
 \`\`\`ts
 ${typeContent}
 \`\`\`
-</details>
+
+:::
 `)
         .append(`## Source`)
         .append(links)
