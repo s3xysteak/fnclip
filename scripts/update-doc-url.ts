@@ -10,7 +10,7 @@ async function run() {
     await fs.writeFile(
       file,
       code.replace(
-        /(@see\s*\{@link\s*)(?:doc-url|https:.*\/)(\s*\})/,
+        /(@see\s*\{@link\s*)(?:link|https:.*\/)(\s*\})/g,
         `$1https://s3xysteak.github.io/fnclip/functions/${type}/${name}/$2`,
       ),
     )
