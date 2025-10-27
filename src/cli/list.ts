@@ -3,7 +3,7 @@ import { cyan } from 'ansis'
 import consola from 'consola'
 import fs from 'fs-extra'
 import { join } from 'pathe'
-import { getMeta } from '../utils'
+import { getMeta, groupBy } from '../utils'
 import { handleOptions } from './options'
 
 export interface ListOptions extends BaseOptions {
@@ -13,10 +13,10 @@ export interface ListOptions extends BaseOptions {
 export async function list(options: Partial<ListOptions>) {
   const opts = await handleOptions(options)
 
-  const funcs = Object.keys(await getMeta())
+  const funcs = Object.entries(await getMeta()).map(([name, path]) => ({ name, type: path.split('/')[1] }))
 
   if (opts.remote) {
-    consola.info(funcs.join(', '))
+    format(funcs)
   }
   else {
     const infoCount = (n = 0) => consola.info(`Found ${cyan`${n}`} fnclip functions${n === 0 ? '.' : ':'}`)
@@ -29,6 +29,7 @@ export async function list(options: Partial<ListOptions>) {
     const list = new Set(
       (await fs.readdir(dirPath)).map(path => path.replace(/\.d?\.ts|\.js$/, '')),
     )
+    // remove index.js
     list.delete('index')
 
     if (list.size === 0) {
@@ -36,9 +37,17 @@ export async function list(options: Partial<ListOptions>) {
     }
     else {
       infoCount(list.size)
-      consola.info(
-        funcs.filter(name => list.has(name)).join(', '),
-      )
+      format(funcs.filter(({ name }) => list.has(name)))
     }
   }
+}
+
+function format(data: { name: string, type: string }[]) {
+  const grouped = groupBy(data, item => item.type)
+  Object.entries(grouped)
+    .filter(([type, items]) => !!items && type !== 'config')
+    .forEach(([type, items]) => {
+      consola.info(cyan`${type}`)
+      consola.info(items!.map(({ name }) => name).join(', '))
+    })
 }
