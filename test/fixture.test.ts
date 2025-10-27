@@ -61,22 +61,22 @@ describe('fnclip cli', () => {
   })
 
   it('remove', async () => {
-    await run('pnpm fnclip add isPromise')
-    expect(await fs.pathExists(p('src/utils/fnclip/isPromise.js'))).toBe(true)
+    await run('pnpm fnclip add get')
+    expect(await fs.pathExists(p('src/utils/fnclip/get.js'))).toBe(true)
     expect(await fs.pathExists(p('src/utils/fnclip/pipe.js'))).toBe(true)
 
-    await run('pnpm fnclip rm isPromise')
-    expect(await fs.pathExists(p('src/utils/fnclip/isPromise.js'))).toBe(false)
+    await run('pnpm fnclip rm get')
+    expect(await fs.pathExists(p('src/utils/fnclip/get.js'))).toBe(false)
     expect(await fs.pathExists(p('src/utils/fnclip/pipe.js'))).toBe(true)
   })
 
   it('index-path', async () => {
-    await run('pnpm fnclip add isPromise --index-path src/utils/fnclip.js')
+    await run('pnpm fnclip add get --index-path src/utils/fnclip.js')
     expect(await fs.pathExists(p('src/utils/fnclip.js'))).toBe(true)
-    expect(await fs.readFile(p('src/utils/fnclip.js'), 'utf8')).toContain(`export * from './fnclip/isPromise';`)
+    expect(await fs.readFile(p('src/utils/fnclip.js'), 'utf8')).toContain(`export * from './fnclip/get';`)
 
     await fs.remove(p('src/utils/fnclip.js'))
-    await run('pnpm fnclip rm isPromise')
+    await run('pnpm fnclip rm get')
   })
 })
 
