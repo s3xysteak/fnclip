@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { handleOptions } from '../src/cli/options'
 
-describe('options', () => {
+describe.concurrent('options', () => {
   it('handleOptions', async () => {
     expect(await handleOptions()).toMatchInlineSnapshot(`
       {
@@ -14,5 +14,16 @@ describe('options', () => {
         "ts": true,
       }
     `)
+  })
+
+  it('change dir', async () => {
+    await Promise.all([
+      handleOptions({ dir: 'src' }).then((result) => {
+        expect(result).toMatchObject({ indexPath: 'src/index' })
+      }),
+      handleOptions({ dir: 'src', indexPath: 'index' }).then((result) => {
+        expect(result).toMatchObject({ indexPath: 'index' })
+      }),
+    ])
   })
 })
