@@ -5,7 +5,7 @@ describe.concurrent('is', () => {
   Object.entries(createTest()).forEach(([key, value]) => {
     it(key, () => {
       value.forEach(([input, expected]) => {
-        expect(input()).toBe(expected)
+        expect(input).toBe(expected)
       })
     })
   })

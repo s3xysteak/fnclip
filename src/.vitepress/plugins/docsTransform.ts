@@ -40,12 +40,12 @@ export default function (): Plugin {
             .append(`\`\`\`vue\n${demoCode}\n\`\`\``)
             .append(`---`)
             .script()
-            .append(`import { defineAsyncComponent } from 'vue'`)
+            .prepend(`import { defineAsyncComponent } from 'vue'`)
             .append(`const Comp = defineAsyncComponent(() => import('./demo.vue'))`)
             .back()
             .append('<Suspense>')
             .append(`<Comp />`)
-            .append(`</Suspense>\n`),
+            .append(`</Suspense>`),
         )
         .append(`## Type Declarations`)
         .append(`
@@ -70,10 +70,10 @@ function createCodeChain(_code: string) {
   let code = _code
 
   const extractScript = () => {
-    const doMatch = () => code.match(/(<script setup>)([\s\S]*?)(<\/script>)/)
+    const doMatch = () => code.match(/(<script\s+setup(?:\s+lang=["']ts["'])?>)([\s\S]*?)(<\/script>)/)
     let match = doMatch()
     if (!match) {
-      code = `${code}\n<script setup>\n</script>\n`
+      code = `${code}\n<script setup lang="ts">\n</script>\n`
       match = doMatch()
     }
     if (!match) {
@@ -106,11 +106,11 @@ function createCodeChain(_code: string) {
 
   const api: Api = {
     prepend: (content: string) => {
-      code = `${content}\n${code}`
+      code = `\n${content}\n${code}`
       return api
     },
     append: (content: string) => {
-      code = `${code}${content}\n`
+      code = `${code}\n${content}\n`
       return api
     },
     replace: (search: string | RegExp, replacement: string) => {

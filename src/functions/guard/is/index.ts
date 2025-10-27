@@ -18,6 +18,13 @@ export const isNumber = (val: any): val is number => typeof val === 'number'
 
 export const isString = (val: unknown): val is string => typeof val === 'string'
 
+/**
+ * Determines whether the given value is a **plain object**.
+ *
+ * That is, an object created by `{}` or `new Object()`.
+ *
+ * NOT an array, function, class instance, built-in object (like `Date` or `RegExp`), or `null`.
+ */
 export const isObject = (val: any): val is object => toString(val) === '[object Object]'
 
 /**
@@ -31,8 +38,6 @@ export const isDate = (val: any): val is Date => toString(val) === '[object Date
 
 /**
  * Check whether the input is promise-like, which is non-nullable and has a `then` function property.
- *
- * @see {@link https://s3xysteak.github.io/fnclip/functions/guard/is/}
  */
 export function isPromise(val: unknown): val is Promise<unknown> {
   return !!val && typeof (val as any).then === 'function'
@@ -40,9 +45,7 @@ export function isPromise(val: unknown): val is Promise<unknown> {
 
 /**
  * Check whether the input is **NOT** null or undefined.
- *
- * @see {@link https://s3xysteak.github.io/fnclip/functions/guard/is/}
  */
-export function isNonNullable<T>(value: T): value is NonNullable<T> {
+export function isPresent<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined
 }
