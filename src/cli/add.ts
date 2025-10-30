@@ -19,10 +19,16 @@ export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
   const dirPath = path.join(opts.cwd, opts.dir)
 
   const meta = await getMeta()
+  const allFuncsSet = new Set(Object.keys(meta))
 
   // handle function files
   await fs.ensureDir(dirPath)
   for (const func of funcs) {
+    if (!allFuncsSet.has(func)) {
+      consola.warn(`Function ${cyan(func)} not exist, skip it.`)
+      continue
+    }
+
     const exts = opts.ts ? ['.ts'] : ['.js', '.d.ts']
 
     for (const ext of exts) {
