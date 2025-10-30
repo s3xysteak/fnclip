@@ -3,6 +3,7 @@ import { cac } from 'cac'
 import { consola } from 'consola'
 import { add, clear, config, list, remove } from '..'
 import { version } from '../../package.json'
+import { update } from './update'
 
 const cli = cac('fnclip')
 cli.help().version(version)
@@ -61,6 +62,19 @@ cli
   .option('--cwd <path>', 'The base path')
   .option('--ts', 'Enable TypeScript mode')
   .action(config)
+
+cli
+  .command('update', 'Update all fnclip functions to the latest version in your project', {
+    ignoreOptionDefaultValue: true,
+    allowUnknownOptions: true,
+  })
+  .alias('up')
+  .option('-d, --dir <path>', 'The target folder')
+  .option('--cwd <path>', 'The base path')
+  .option('--ts', 'Enable TypeScript mode')
+  .option('--index', 'Generate index file to export functions')
+  .option('--index-path', 'The path of index file')
+  .action(update)
 
 export async function runCLI() {
   cli.parse(process.argv, { run: false })

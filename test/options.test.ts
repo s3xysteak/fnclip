@@ -4,7 +4,8 @@ import { handleOptions } from '../src/cli/options'
 
 describe.concurrent('options', () => {
   it('handleOptions', async () => {
-    expect(await handleOptions()).toMatchInlineSnapshot(`
+    const config = await handleOptions()
+    expect(config).toMatchInlineSnapshot(`
       {
         "cwd": ".",
         "dir": "src/utils/fnclip",
