@@ -1,14 +1,16 @@
 import type { PackageJson } from 'pkg-types'
 import type { FnclipOptions } from '../cli/options'
+import * as fs from 'node:fs/promises'
 import * as pkg from 'empathic/package'
-import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
+import { exists } from './tools'
 
 export * from './fnclip/index'
+export * from './tools'
 
 export async function getMeta() {
-  const res: Record<string, string> = await fs.readJson(path.join(fnclipPath, 'funcs-meta.json'))
+  const res: Record<string, string> = JSON.parse(await fs.readFile(path.join(fnclipPath, 'funcs-meta.json'), 'utf-8'))
   return res
 }
 
@@ -21,7 +23,7 @@ export async function isTypescript(cwd: string) {
   if (!packageJsonPath)
     return
 
-  const obj: PackageJson = await fs.readJson(packageJsonPath)
+  const obj: PackageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'))
   return !!(obj.dependencies?.typescript || obj.devDependencies?.typescript)
 }
 
@@ -39,14 +41,14 @@ export async function updateIndex(opts: FnclipOptions, dry = false) {
   let indexRealPath: string
   for (const ext of ['.ts', '.js']) {
     const targetPath = ensureExt(indexPathMaybeExt, ext)
-    if (await fs.exists(targetPath)) {
+    if (await exists(targetPath)) {
       indexRealPath = targetPath
       break
     }
   }
 
   indexRealPath ??= ensureExt(indexPathMaybeExt, (opts.ts ? '.ts' : '.js'))
-  await fs.ensureFile(indexRealPath)
+  await fs.open(indexRealPath, 'a')
 
   const funcs = [...new Set(
     (await fs.readdir(dirPath)).map(name => name.replace(/\.(?:js|ts|d\.ts)$/, '')),

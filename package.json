@@ -53,14 +53,12 @@
     "consola": "^3.4.2",
     "defu": "^6.1.4",
     "empathic": "^2.0.0",
-    "fs-extra": "^11.3.2",
     "local-pkg": "^1.1.2",
     "pathe": "^2.0.3",
     "unconfig": "^7.3.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.1.0",
-    "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.9.1",
     "bumpp": "^10.3.1",
     "eslint": "^9.38.0",

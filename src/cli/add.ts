@@ -1,7 +1,8 @@
 import type { BaseOptions } from './options'
+import * as fs from 'node:fs/promises'
 import { cyan } from 'ansis'
+
 import consola from 'consola'
-import fs from 'fs-extra'
 import * as path from 'pathe'
 import { fnclipPath } from '..'
 import { addIgnoreToContent, ensureExt, getMeta, updateIndex } from '../utils'
@@ -22,7 +23,7 @@ export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
   const allFuncsSet = new Set(Object.keys(meta))
 
   // handle function files
-  await fs.ensureDir(dirPath)
+  await fs.mkdir(dirPath, { recursive: true })
   for (const func of funcs) {
     if (!allFuncsSet.has(func)) {
       consola.warn(`Function ${cyan(func)} not exist, skip it.`)
@@ -33,9 +34,10 @@ export async function add(funcs: string[], options: Partial<AddOptions> = {}) {
 
     for (const ext of exts) {
       const targetPath = ensureExt(func, ext)
-      await fs.copy(
+      await fs.cp(
         path.join(fnclipPath, ensureExt(meta[func], ext)),
         path.join(dirPath, targetPath),
+        { recursive: true, force: true },
       )
 
       // add comments to disable eslint/prettier etc.

@@ -1,4 +1,4 @@
-import fs from 'fs-extra'
+import * as fs from 'node:fs/promises'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { rootJoin, run } from './shared'
 

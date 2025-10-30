@@ -1,9 +1,9 @@
 import type { BaseOptions } from './options'
+import * as fs from 'node:fs/promises'
 import { cyan } from 'ansis'
 import consola from 'consola'
-import fs from 'fs-extra'
 import { join } from 'pathe'
-import { getMeta, updateIndex } from '../utils'
+import { exists, getMeta, updateIndex } from '../utils'
 import { handleOptions } from './options'
 
 export interface RemoveOptions extends BaseOptions { }
@@ -28,8 +28,8 @@ export async function remove(funcs: string[], options: Partial<RemoveOptions>) {
     let exist = false
     for (const ext of ['.ts', '.js', '.d.ts']) {
       const path = join(dirPath, `${func}${ext}`)
-      if (await fs.pathExists(path)) {
-        await fs.remove(path)
+      if (await exists(path)) {
+        await fs.rm(path, { force: true, recursive: true })
         exist = true
       }
     }

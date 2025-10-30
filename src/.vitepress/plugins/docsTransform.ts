@@ -1,5 +1,6 @@
 import type { Plugin } from 'vite'
-import fs from 'fs-extra'
+import * as fs from 'node:fs/promises'
+import { exists } from '../../utils'
 
 const FUNCTIONS_MARKDOWN_REGEX = /src\/functions\/.*\.md$/
 const isFunctionsMarkdown = (filepath: string) => FUNCTIONS_MARKDOWN_REGEX.test(filepath)
@@ -15,7 +16,7 @@ export default function (): Plugin {
       const [type, name] = id.replace(/.*\/src\/functions\//, '').split('/')
 
       const demoPath = `src/functions/${type}/${name}/demo.vue`
-      const demoCode = await fs.pathExists(demoPath)
+      const demoCode = await exists(demoPath)
         ? await fs.readFile(demoPath, 'utf-8')
         : null
       const hasDemo = !!demoCode

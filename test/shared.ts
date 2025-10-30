@@ -24,7 +24,7 @@ export async function run(command: string, args?: string[]) {
   return result
 }
 
-export async function exist(pathname: string) {
+export async function exists(pathname: string) {
   try {
     await fs.access(pathname)
     return true

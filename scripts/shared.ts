@@ -1,4 +1,4 @@
-import fs from 'fs-extra'
+import * as fs from 'node:fs/promises'
 import { glob } from 'tinyglobby'
 
 export async function updateFuncsMeta(files?: string[]) {

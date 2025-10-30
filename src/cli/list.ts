@@ -1,9 +1,9 @@
 import type { BaseOptions } from './options'
+import * as fs from 'node:fs/promises'
 import { cyan } from 'ansis'
 import consola from 'consola'
-import fs from 'fs-extra'
 import { join } from 'pathe'
-import { getMeta, groupBy } from '../utils'
+import { exists, getMeta, groupBy } from '../utils'
 import { handleOptions } from './options'
 
 export interface ListOptions extends BaseOptions {
@@ -22,7 +22,7 @@ export async function list(options: Partial<ListOptions>) {
     const infoCount = (n = 0) => consola.info(`Found ${cyan`${n}`} fnclip functions${n === 0 ? '.' : ':'}`)
 
     const dirPath = join(opts.cwd, opts.dir)
-    const isExist = await fs.exists(dirPath)
+    const isExist = await exists(dirPath)
     if (!isExist)
       return infoCount()
 
