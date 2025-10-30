@@ -67,11 +67,13 @@ ${typeContent}
   }
 }
 
+const VUE_SCRIPT_REGEX = /(?<!```vue\s)(<script\s+setup(?:\s+lang=["']ts["'])?>)([\s\S]*?)(<\/script>)(?![\s\S]*?```)/
 function createCodeChain(_code: string) {
   let code = _code
 
   const extractScript = () => {
-    const doMatch = () => code.match(/(<script\s+setup(?:\s+lang=["']ts["'])?>)([\s\S]*?)(<\/script>)/)
+    const doMatch = () => code
+      .match(VUE_SCRIPT_REGEX)
     let match = doMatch()
     if (!match) {
       code = `${code}\n<script setup lang="ts">\n</script>\n`
